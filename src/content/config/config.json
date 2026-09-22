@@ -1,0 +1,11 @@
+{
+  "seo": {
+    "title": "Blocks Starter",
+    "description": "Reusable TinaCMS + Astro blocks starter"
+  },
+  "nav": [
+    { "title": "Home", "link": "/" },
+    { "title": "Blog", "link": "/blog/hello-world/" }
+  ],
+  "footerNote": "© 2026 — Built with TinaCMS + Astro"
+}
