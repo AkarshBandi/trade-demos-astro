@@ -28,7 +28,7 @@
     "yaml": "^2.9.1"
   },
   "devDependencies": {
-    "@tinacms/cli": "^3.0.0",
+    "@tinacms/cli": "^3.1.0",
     "postcss-html": "^2.0.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
