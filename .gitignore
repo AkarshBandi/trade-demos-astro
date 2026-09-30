@@ -3,7 +3,6 @@ dist
 .astro
 .env
 .env.local
-tina/__generated__
 public/admin
 .wrangler
 .turbo

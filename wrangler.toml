@@ -4,4 +4,4 @@ compatibility_flags = ["nodejs_compat"]
 workers_dev = true
 
 [vars]
-SITE_URL = "https://trade-demos-astro.workers.dev"
+SITE_URL = "https://trade-demos-astro.akarshbandi82.workers.dev"
