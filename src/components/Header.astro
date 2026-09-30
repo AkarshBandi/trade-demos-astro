@@ -5,14 +5,97 @@ interface Props { config?: CmsConfig | null; pathname?: string; }
 const { config, pathname = '/' } = Astro.props as any;
 const nav = (config as any)?.nav ?? [
   { title: 'Home', link: '/' },
-  { title: 'Blog', link: '/blog/' },
+  { title: 'HVAC', link: '/hvac' },
+  { title: 'Roofing', link: '/roofing' },
 ];
+const siteTitle = (config as any)?.seo?.title ?? 'Trade Demos';
+const isCurrent = (link: string) => pathname === link;
 ---
-<header style="display:flex;align-items:center;justify-content:space-between;max-width:1120px;margin:0 auto;padding:16px 24px;border-bottom:1px solid #eee">
-  <a href="/" style="font-weight:800;letter-spacing:0.08em;text-decoration:none;color:inherit" data-tina-field={tinaField(config as any, 'seo')}>{(config as any)?.seo?.title ?? 'Site'}</a>
-  <nav style="display:flex;gap:16px" data-tina-field={tinaField(config as any, 'nav')}>
-    {nav.map((item: any) => (
-      <a href={item.link} style={`text-decoration:none;color:inherit;opacity:${pathname===item.link ? '1' : '0.6'};font-size:13px;letter-spacing:0.08em;text-transform:uppercase`}>{item.title}</a>
-    ))}
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a href="/" class="wordmark" data-tina-field={tinaField(config as any, 'seo')}>
+      <span class="wordmark__name">{siteTitle}</span>
+      <small>MESA · FRISCO</small>
+      <span class="wordmark__badge">Demo</span>
+    </a>
+
+    <!--
+      THE MOBILE MENU BUTTON. There was no menu button at all: the stylesheet
+      hid the three text links below 860px and left only the two CTA buttons,
+      which meant "Home" had NO route on a phone. And those two buttons were
+      themselves being pushed off-screen, because the wordmark (serif name +
+      "MESA · FRISCO" + a rotated badge) measured ~264px inside a 342px content
+      box. Nothing had `overflow` or `min-width: 0` on it, so the flex row just
+      overflowed and `justify-content: space-between` pushed the nav past the
+      right edge — which is what "the menu button top right is not visible"
+      actually was.
+
+      The button is a real <button> with `aria-expanded` and `aria-controls`,
+      not a <div>, so it is keyboard reachable and announces its state. The
+      panel is a <nav>, so it is a navigation landmark.
+    -->
+    <button
+      class="nav-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+      data-nav-toggle
+    >
+      <span class="nav-toggle__bars" aria-hidden="true"></span>
+      <span class="nav-toggle__label">Menu</span>
+    </button>
+
+    <nav class="nav" aria-label="Primary" data-tina-field={tinaField(config as any, 'nav')}>
+      {nav.map((item: any) => (
+        <a
+          href={item.link}
+          aria-current={isCurrent(item.link) ? 'page' : undefined}
+          style={`text-decoration:none;color:inherit;opacity:${isCurrent(item.link) ? '1' : '0.7'};font-size:0.86rem`}
+        >{item.title}</a>
+      ))}
+      <a href="/hvac" class="btn btn--ghost" style="padding:0.5rem 0.85rem;font-size:0.84rem">HVAC</a>
+      <a href="/roofing" class="btn" style="padding:0.55rem 0.9rem;font-size:0.84rem">Roofing</a>
+    </nav>
+  </div>
+
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Primary, mobile" hidden data-mobile-nav>
+    <div class="container">
+      {nav.map((item: any) => (
+        <a
+          href={item.link}
+          aria-current={isCurrent(item.link) ? 'page' : undefined}
+        >{item.title}</a>
+      ))}
+    </div>
   </nav>
 </header>
+
+<script>
+  // Mobile menu. No framework, no dependency — the project ships no JS bundle
+  // and did not need one for a disclosure this small.
+  const toggle = document.querySelector('[data-nav-toggle]');
+  const panel = document.querySelector('[data-mobile-nav]');
+  if (toggle && panel) {
+    const setOpen = (open) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      panel.hidden = !open;
+      document.documentElement.classList.toggle('nav-open', open);
+    };
+    setOpen(false);
+    toggle.addEventListener('click', () => {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+    // Following a link inside the panel should close it, or the next page
+    // starts with the panel open if the browser restores scroll state.
+    panel.addEventListener('click', (e) => {
+      if (e.target instanceof HTMLAnchorElement) setOpen(false);
+    });
+    // Escape closes and returns focus to the button that opened it.
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+  }
+</script>

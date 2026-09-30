@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/design-slop-detect.mjs src/pages/prototype.astro src/pages/roofing-prototype.astro --min=P1 2>&1 | head -n 20"
+          }
+        ]
+      }
+    ]
+  }
+}

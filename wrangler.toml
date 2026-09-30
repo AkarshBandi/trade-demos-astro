@@ -1,12 +1,7 @@
-name = "tina-astro-blocks-starter"
+name = "trade-demos-astro"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 workers_dev = true
 
-# Uncomment when using KV sessions (optional for Astro session)
-# [[kv_namespaces]]
-# binding = "SESSION"
-# id = "replace_with_kv_id"
-
 [vars]
-SITE_URL = "https://tina-astro-blocks-starter.workers.dev"
+SITE_URL = "https://trade-demos-astro.workers.dev"

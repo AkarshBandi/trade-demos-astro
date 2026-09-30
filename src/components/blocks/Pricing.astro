@@ -1,0 +1,30 @@
+---
+import { tinaField } from '@tinacms/astro/tina-field';
+const { data } = Astro.props as { data: any };
+const tiers = (data?.tiers ?? []).filter(Boolean);
+const accent = data?.accent ?? 'brick';
+---
+<section class="block-pricing" style="max-width:1120px;margin:0 auto;padding:48px 24px" data-tina-field={tinaField(data, 'tiers')}>
+  {data?.eyebrow && <p class="kicker" style="text-align:center" data-tina-field={tinaField(data, 'eyebrow')}>{data.eyebrow}</p>}
+  {data?.headline && <h2 style="text-align:center;margin-top:8px" data-tina-field={tinaField(data, 'headline')}>{data.headline}</h2>}
+  {data?.subhead && <p style="text-align:center;opacity:0.7;max-width:56ch;margin:10px auto 0;line-height:1.6" data-tina-field={tinaField(data, 'subhead')}>{data.subhead}</p>}
+  <div style="display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:28px">
+    {tiers.map((t: any, i: number) => (
+      <div class="card" style={`padding:20px;position:relative;${t.featured ? 'border-color:var(--accent);box-shadow:0 4px 16px rgba(0,0,0,0.06)' : ''}`} data-tina-field={tinaField(t, 'title')}>
+        {t.featured && <span style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;padding:4px 10px;border-radius:999px;white-space:nowrap">Most popular</span>}
+        <p style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3)">0{i+1}</p>
+        <h3 style="margin-top:6px" data-tina-field={tinaField(t, 'title')}>{t.title}</h3>
+        {t.price && <p style="font-family:var(--font-serif);font-weight:800;font-size:1.6rem;margin-top:10px" data-tina-field={tinaField(t, 'price')}>{t.price}</p>}
+        {t.priceNote && <p style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-3);margin-top:2px" data-tina-field={tinaField(t, 'priceNote')}>{t.priceNote}</p>}
+        {t.desc && <p style="margin-top:10px;font-size:0.92rem;color:var(--ink-2);line-height:1.6" data-tina-field={tinaField(t, 'desc')}>{t.desc}</p>}
+        {t.bullets && t.bullets.length > 0 && (
+          <ul style="margin-top:12px;padding-left:18px;font-size:0.88rem;color:var(--ink-2);line-height:1.7">
+            {t.bullets.map((b: string) => <li>{b}</li>)}
+          </ul>
+        )}
+        {t.ctaLabel && <a href={t.ctaLink ?? '#contact'} style="display:inline-block;margin-top:14px;font-size:0.86rem;font-weight:600;text-decoration:underline;text-underline-offset:3px"> {t.ctaLabel} →</a>}
+      </div>
+    ))}
+  </div>
+  {data?.fine && <p style="text-align:center;margin-top:16px;font-family:var(--font-mono);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-3)" data-tina-field={tinaField(data, 'fine')}>{data.fine}</p>}
+</section>

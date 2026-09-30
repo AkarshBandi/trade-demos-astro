@@ -1,6 +1,141 @@
-*,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,'Helvetica Neue',Arial,sans-serif;line-height:1.6;color:#111;background:#fff}
-a{color:inherit}
+/* Trade Demos — calm familiar, not fashion, not slop
+   Paper/ink/brick-copper, one accent, 6px cards, 1px rules
+   Fonts: Source Serif 4 + IBM Plex Sans + IBM Plex Mono loaded in Base.astro
+*/
+:root{
+  --paper:#FCFCF9;
+  --paper-2:#F6F1EB;
+  --paper-3:#EDE8E0;
+  --ink:#0F2439;
+  --ink-2:#2A3A4D;
+  --ink-3:#6A7685;
+  --line:#E2DDD4;
+  --line-2:#CFC8BA;
+  --brick:#C1272D;
+  --brick-2:#9E1F24;
+  --copper:#B57F4A;
+  --copper-2:#9A6A3A;
+  --accent:var(--brick);
+  --accent-2:var(--brick-2);
+  --accent-roof:var(--copper);
+  --font-serif:"Source Serif 4", Georgia, serif;
+  --font-sans:"IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --font-mono:"IBM Plex Mono", ui-monospace, monospace;
+  --container:1120px;
+  --gutter:clamp(16px,3vw,32px);
+  --radius:6px;
+  --radius-lg:10px;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;font-family:var(--font-sans);line-height:1.6;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
 img{max-width:100%;height:auto;display:block}
-.eyebrow{letter-spacing:0.18em;text-transform:uppercase;font-size:11px;opacity:0.6}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3{font-family:var(--font-serif);font-weight:700;line-height:1.08;letter-spacing:-0.015em;color:var(--ink)}
+h1{font-size:clamp(2rem, 4vw + 0.8rem, 3rem)}
+h2{font-size:clamp(1.5rem, 2vw + 0.8rem, 2.1rem)}
+h3{font-size:1.15rem}
+.mono{font-family:var(--font-mono)}
+.eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+.kicker{font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.container{width:100%;max-width:var(--container);margin:0 auto;padding:0 var(--gutter)}
+.section{padding:clamp(48px,6vw,72px) 0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.85rem 1.25rem;font-family:var(--font-sans);font-weight:600;font-size:0.95rem;border:1.5px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer;transition:background 120ms,transform 120ms}
+.btn:hover{background:#1A3350;transform:translateY(-1px)}
+.btn--accent{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn--accent:hover{background:var(--accent-2);border-color:var(--accent-2)}
+.btn--ghost{background:transparent;color:var(--ink);border-color:var(--line-2)}
+.btn--ghost:hover{background:var(--paper-2)}
+.btn--large{padding:1rem 1.5rem;font-size:1rem}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius)}
+.site-header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50}
+.site-header__inner{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;height:64px}
+/* Both flex children need `min-width: 0` or the row cannot shrink below the
+   widest item's min-content width. Without it the nav overflowed the container
+   and, because the row is `justify-content: space-between`, the two CTA buttons
+   were pushed past the right edge and became unreachable on a phone. */
+.wordmark{min-width:0;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;font-family:var(--font-serif);font-weight:800;font-size:1.25rem;letter-spacing:-0.02em;text-decoration:none;color:inherit}
+.wordmark__name{white-space:nowrap}
+.wordmark__badge{background:var(--paper-2);border:1px solid var(--line);color:var(--ink-3);font-family:var(--font-mono);font-size:9px;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;padding:2px 6px;border-radius:999px;transform:rotate(1.2deg);white-space:nowrap}
+.wordmark small{font-family:var(--font-mono);font-weight:400;font-size:0.62rem;letter-spacing:0.08em;color:var(--ink-3);white-space:nowrap}
+.nav{display:flex;align-items:center;gap:1.2rem;min-width:0;flex:0 0 auto}
+/* `:not(.btn)` is load-bearing, not tidiness. `.nav a` is specificity 0-2-0 and
+   `.btn` is 0-1-0, so this rule was beating the button's own `color:var(--paper)`
+   and painting dark ink text onto the dark `--ink` fill. The two CTAs in the
+   header were unreadable — one literally invisible. */
+.nav a:not(.btn){font-size:0.86rem;color:var(--ink-2);white-space:nowrap}
+.nav a.btn{color:var(--paper)}
+.nav a.btn--ghost{color:var(--ink)}
+.nav a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
+
+/* The menu button. Hidden on desktop, and the FIRST thing in the row on mobile
+   so it lands top-right where a menu button belongs. */
+.nav-toggle{display:none;align-items:center;gap:8px;margin-left:auto;padding:0.5rem 0.7rem;background:transparent;border:1px solid var(--line-2);color:var(--ink);font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer}
+.nav-toggle__bars{position:relative;display:block;width:16px;height:2px;background:var(--ink)}
+.nav-toggle__bars::before,.nav-toggle__bars::after{content:"";position:absolute;left:0;width:16px;height:2px;background:var(--ink);transition:transform 160ms}
+.nav-toggle__bars::before{top:-5px}
+.nav-toggle__bars::after{top:5px}
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars{background:transparent}
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars::before{transform:translateY(5px) rotate(45deg)}
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars::after{transform:translateY(-5px) rotate(-45deg)}
+
+/* The panel is a sibling of the row, not a child, so it drops below the 60px
+   header instead of stretching the sticky bar. `hidden` is what actually hides
+   it; the display rule is only for when it is open. */
+.mobile-nav{border-top:1px solid var(--line);background:#fff}
+.mobile-nav .container{display:flex;flex-direction:column;padding-top:8px;padding-bottom:8px}
+.mobile-nav a{padding:0.7rem 0;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;font-family:var(--font-mono);font-size:0.8rem;letter-spacing:0.08em;text-transform:uppercase}
+.mobile-nav a:last-child{border-bottom:0}
+.mobile-nav a[aria-current="page"]{color:var(--accent);font-weight:600}
+.site-footer{background:var(--ink);color:#D8DDE3;padding:36px 0 28px;border-top:4px solid var(--accent)}
+.site-footer a{color:#A8B2BF}
+.site-footer a:hover{color:#fff;text-decoration:underline}
+.field{width:100%;padding:0.75rem 0.85rem;border:1px solid var(--line-2);background:#fff;font-family:var(--font-sans);font-size:0.95rem;border-radius:2px}
+.field:focus{outline:none;border-color:var(--ink)}
+.field::placeholder{color:#8B95A3;opacity:1}
+.field--dark::placeholder{color:rgba(255,255,255,0.78);opacity:1}
+.field--dark::-webkit-input-placeholder{color:rgba(255,255,255,0.78)}
+.field--dark::-moz-placeholder{color:rgba(255,255,255,0.78)}
+.muted{color:var(--ink-3)}
+.small{font-size:0.88rem}
+/* Wave divider — animated overlay, neighbor fill, never #FFFFFF */
+.wave-divider{position:relative;height:28px;overflow:hidden;line-height:0}
+.wave-divider svg{display:block;width:calc(100% + 40px);height:28px;position:relative;left:-20px}
+.wave-divider .wave-back{animation:waveDrift 7s ease-in-out infinite}
+.wave-divider .wave-front{animation:waveDrift 4.5s ease-in-out infinite reverse}
+.wave-divider{animation:waveBob 5s ease-in-out infinite}
+@keyframes waveDrift{0%{transform:translateX(0)}50%{transform:translateX(-18px)}100%{transform:translateX(0)}}
+@keyframes waveBob{0%,100%{transform:translateY(0)}50%{transform:translateY(1px)}}
+@media (prefers-reduced-motion:reduce){.wave-divider .wave-back,.wave-divider .wave-front,.wave-divider{animation:none!important}}
+/* trust strip flat */
+.trust{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--paper-2)}
+.trust__inner{padding:10px var(--gutter);display:flex;flex-wrap:wrap;gap:10px 16px;font-family:var(--font-mono);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;justify-content:center}
+/* Mobile header. Previously this was `.nav a:not(.btn){display:none}`, which
+   hid the three text links and left only the two CTA buttons — so "Home" had no
+   route on a phone at all, and the two buttons were wider than the space the
+   wordmark left them. Now the text links live in `.mobile-nav` behind a real
+   menu button, and the two CTAs stay in the bar. */
+@media(max-width:860px){
+  .site-header__inner{height:60px;gap:0.75rem}
+  .wordmark{font-size:1.05rem}
+  /* The "MESA · FRISCO" line and the Demo badge are the first things to go:
+     together they measured ~146px, which is the difference between the CTAs
+     fitting and overflowing. The Demo badge returns inside the mobile panel. */
+  .wordmark small{display:none}
+  .wordmark__badge{display:none}
+  .nav-toggle{display:flex}
+  .nav a:not(.btn){display:none}
+  .nav{gap:0.5rem}
+  .nav .btn{padding:0.5rem 0.7rem!important;font-size:0.78rem!important}
+  .mobile-nav a[data-title="Demo"]{display:none}
+}
+/* At 420px and under, even the two CTAs are too much next to the wordmark, so
+   they move into the panel too and the bar carries only the menu button. */
+@media(max-width:420px){
+  .nav{display:none}
+  .wordmark{font-size:1rem}
+}
+@media(prefers-reduced-motion:reduce){
+  .nav-toggle__bars::before,.nav-toggle__bars::after{transition:none}
+}

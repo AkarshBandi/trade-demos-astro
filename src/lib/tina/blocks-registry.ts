@@ -8,6 +8,7 @@ import Gallery from '../../components/blocks/Gallery.astro';
 import Accordion from '../../components/blocks/Accordion.astro';
 import Stats from '../../components/blocks/Stats.astro';
 import Testimonial from '../../components/blocks/Testimonial.astro';
+import Pricing from '../../components/blocks/Pricing.astro';
 
 export const blockRegistry = new Map<string, any>([
   ['hero', Hero],
@@ -18,4 +19,5 @@ export const blockRegistry = new Map<string, any>([
   ['accordion', Accordion],
   ['stats', Stats],
   ['testimonial', Testimonial],
+  ['pricing', Pricing],
 ]);

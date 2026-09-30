@@ -1,26 +1,225 @@
 ---
 import { tinaField } from '@tinacms/astro/tina-field';
 const { data } = Astro.props as { data: any };
+const img = data?.image?.src;
+const alt = data?.image?.alt ?? '';
 ---
-<section class="block-hero" style="padding:96px 0 72px;max-width:1120px;margin:0 auto;padding-left:24px;padding-right:24px">
-  <div style="display:grid;gap:32px;align-items:center;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
-    <div>
-      {data?.eyebrow && <p class="eyebrow" style="letter-spacing:0.2em;text-transform:uppercase;font-size:12px;opacity:0.6" data-tina-field={tinaField(data, 'eyebrow')}>{data.eyebrow}</p>}
-      <h1 style="font-size:clamp(2.4rem,6vw,3.8rem);line-height:1.05;margin:8px 0 16px" data-tina-field={tinaField(data, 'headline')}>{data?.headline ?? 'Headline goes here'}</h1>
-      {data?.tagline && <p style="font-size:18px;opacity:0.7;line-height:1.6;max-width:36rem" data-tina-field={tinaField(data, 'tagline')}>{data.tagline}</p>}
-      <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap">
-        {data?.primaryAction?.label && (
-          <a href={data.primaryAction.link ?? '/'} style="display:inline-block;padding:12px 20px;border:1px solid currentColor;text-decoration:none;font-size:14px;letter-spacing:0.08em;text-transform:uppercase" data-tina-field={tinaField(data.primaryAction, 'label')}>{data.primaryAction.label}</a>
-        )}
-        {data?.secondaryAction?.label && (
-          <a href={data.secondaryAction.link ?? '/'} style="display:inline-block;padding:12px 20px;opacity:0.7;text-decoration:none;font-size:14px;letter-spacing:0.08em;text-transform:uppercase" data-tina-field={tinaField(data.secondaryAction, 'label')}>{data.secondaryAction.label}</a>
-        )}
-      </div>
+<!--
+  HERO — full-bleed background image with the text and both CTAs on top of it.
+
+  It was a two-column grid: text left, the photo beside it as a 4/3 card with
+  `object-fit: cover`, so a landscape photograph was cropped into a squat box
+  beside the headline. The owner asked for "the hero image should be a background
+  full width image while the text and two cta buttons should be on it", and that
+  is what this is.
+
+  AN <img>, NOT A CSS background-image, and that is deliberate. The photo is
+  content — a technician on a condenser, a shingle roof — not decoration, and a
+  `background-image` has no accessible name. As a real <img> it keeps its `alt`,
+  it stays in the accessibility tree, and it can be `loading="eager"` +
+  `fetchpriority="high"` so it does not arrive after the text has painted.
+
+  THE SCRIM IS NOT OPTIONAL. These are bright daylight photographs with white
+  cloud and pale sky in the upper half. White text on them fails contrast badly,
+  so the gradient below is what makes the headline readable, and it is weighted
+  toward the bottom-left where the copy actually sits rather than being an even
+  wash. `is:global` is used only because the inner rules have to reach the
+  elements Astro hoists out of the scoped block.
+-->
+<section class="block-hero">
+  {img && (
+    <img
+      class="block-hero__img"
+      src={img}
+      alt={alt}
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+      data-tina-field={tinaField(data, 'image')}
+    />
+  )}
+  <div class="block-hero__scrim" aria-hidden="true"></div>
+
+  <div class="container block-hero__inner">
+    <div class="block-hero__copy">
+      {data?.eyebrow && (
+        <p class="block-hero__eyebrow" data-tina-field={tinaField(data, 'eyebrow')}>{data.eyebrow}</p>
+      )}
+      <h1 class="block-hero__title" data-tina-field={tinaField(data, 'headline')}>
+        {data?.headline ?? 'Headline goes here'}
+      </h1>
+      {data?.tagline && (
+        <p class="block-hero__tagline" data-tina-field={tinaField(data, 'tagline')}>{data.tagline}</p>
+      )}
+      {(data?.primaryAction?.label || data?.secondaryAction?.label) && (
+        <div class="block-hero__actions">
+          {data?.primaryAction?.label && (
+            <a
+              class="block-hero__cta block-hero__cta--solid"
+              href={data.primaryAction.link ?? '/'}
+              data-tina-field={tinaField(data.primaryAction, 'label')}
+            >{data.primaryAction.label}</a>
+          )}
+          {data?.secondaryAction?.label && (
+            <a
+              class="block-hero__cta block-hero__cta--ghost"
+              href={data.secondaryAction.link ?? '/'}
+              data-tina-field={tinaField(data.secondaryAction, 'label')}
+            >{data.secondaryAction.label}</a>
+          )}
+        </div>
+      )}
     </div>
-    {data?.image?.src && (
-      <figure style="margin:0" data-tina-field={tinaField(data, 'image')}>
-        <img src={data.image.src} alt={data.image.alt ?? ''} style="width:100%;height:auto;aspect-ratio:4/3;object-fit:cover" loading="eager" />
-      </figure>
-    )}
   </div>
 </section>
+
+<style>
+  /* The section itself is the full-bleed surface. No max-width here — the
+     container lives on the inner copy block, so the image runs to both edges of
+     the viewport while the text stays on the same axis as every other page. */
+  .block-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    /* 78vh with a 520px floor: tall enough to read as a hero on a laptop,
+       short enough that a landscape phone is not all image. */
+    min-height: clamp(520px, 78vh, 820px);
+    background: var(--ink);
+  }
+
+  .block-hero__img {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* The source photo is 3:2 (2000x1653) and this hero is up to 2.2:1 on a
+       laptop, so `cover` crops roughly a third of the height off. `center 40%`
+       put the crop through the technician's back and left the bottom-left —
+       where the copy sits — as flat concrete. `center 20%` keeps the whole
+       figure and the open unit, and leaves the empty roof deck under the
+       scrim, which is what the headline needs. Verified by rendering the
+       actual crop at 1152x520 rather than by guessing. */
+    object-position: center 20%;
+  }
+
+  /* Weighted to the bottom-left where the copy sits, and to the top as a light
+     haze rather than a second dark band — a symmetric darkening would kill the
+     photograph, which is the point of putting the text on it. */
+  .block-hero__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      linear-gradient(
+        to top,
+        rgb(15 36 57 / 0.94) 0%,
+        rgb(15 36 57 / 0.86) 22%,
+        rgb(15 36 57 / 0.55) 48%,
+        rgb(15 36 57 / 0.22) 74%,
+        rgb(15 36 57 / 0.14) 100%
+      ),
+      linear-gradient(to right, rgb(15 36 57 / 0.55) 0%, transparent 62%);
+  }
+
+  .block-hero__inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding-top: clamp(88px, 14vh, 160px);
+    padding-bottom: clamp(40px, 7vh, 80px);
+    color: #fff;
+  }
+
+  .block-hero__copy { max-width: 40rem; }
+
+  .block-hero__eyebrow {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgb(255 255 255 / 0.82);
+  }
+
+  .block-hero__title {
+    margin: 0.5rem 0 0;
+    /* EXPLICIT, and not inherited from `.block-hero__inner`. The global
+       `h1,h2,h3{color:var(--ink)}` rule sets a colour ON the element, and a
+       direct declaration always beats inheritance — so the headline was
+       rendering dark navy on a dark photograph. Setting `color:#fff` on the
+       parent did nothing. This has to be here, on the element itself. */
+    color: #fff;
+    font-family: var(--font-serif);
+    font-weight: 800;
+    font-size: clamp(2.4rem, 6vw, 4.25rem);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    /* A tight shadow, not a glow: these photos have hard white cloud edges and
+       a glow would fringe them. This only lifts the glyph off a busy patch. */
+    text-shadow: 0 1px 2px rgb(15 36 57 / 0.45);
+  }
+
+  .block-hero__tagline {
+    margin: 1rem 0 0;
+    max-width: 34rem;
+    font-size: clamp(1rem, 0.95rem + 0.3vw, 1.2rem);
+    line-height: 1.6;
+    color: rgb(255 255 255 / 0.92);
+    text-shadow: 0 1px 2px rgb(15 36 57 / 0.5);
+  }
+
+  .block-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 1.75rem;
+  }
+
+  /* The two CTAs. `solid` is the accent brick and `ghost` is an outlined
+     button — the ghost needs a light border and a translucent dark fill rather
+     than the light-on-white treatment the site uses on a white header, because
+     they now sit on a photograph. */
+  .block-hero__cta {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.85rem 1.5rem;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 140ms, border-color 140ms, transform 140ms;
+  }
+  .block-hero__cta--solid {
+    background: var(--accent);
+    border: 1.5px solid var(--accent);
+    color: #fff;
+  }
+  .block-hero__cta--solid:hover {
+    background: var(--accent-2);
+    border-color: var(--accent-2);
+    transform: translateY(-1px);
+  }
+  .block-hero__cta--ghost {
+    background: rgb(15 36 57 / 0.35);
+    border: 1.5px solid rgb(255 255 255 / 0.7);
+    color: #fff;
+  }
+  .block-hero__cta--ghost:hover {
+    background: rgb(15 36 57 / 0.6);
+    border-color: #fff;
+    transform: translateY(-1px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .block-hero__cta { transition: none; }
+    .block-hero__cta:hover { transform: none; }
+  }
+</style>

@@ -8,13 +8,19 @@ import Gallery from './Gallery.astro';
 import Accordion from './Accordion.astro';
 import Stats from './Stats.astro';
 import Testimonial from './Testimonial.astro';
+import Pricing from './Pricing.astro';
+import WaveDivider from '../WaveDivider.astro';
 
 const { data } = Astro.props as { data: any };
 const blocks = (data?.blocks ?? []).filter(Boolean);
+function typename(b: any) {
+  return b?.__typename ?? (b?._template ? `PageBlocks${b._template.charAt(0).toUpperCase()+b._template.slice(1)}` : undefined);
+}
 ---
-{blocks.map((block: any) => {
+{blocks.map((block: any, i: number) => {
+  const tn = typename(block);
   const rendered = (() => {
-    switch (block?.__typename) {
+    switch (tn) {
       case 'PageBlocksHero':
         return <Hero data={block} />;
       case 'PageBlocksRichText':
@@ -31,9 +37,16 @@ const blocks = (data?.blocks ?? []).filter(Boolean);
         return <Stats data={block} />;
       case 'PageBlocksTestimonial':
         return <Testimonial data={block} />;
+      case 'PageBlocksPricing':
+        return <Pricing data={block} />;
       default:
         return null;
     }
   })();
-  return <div data-tina-field={tinaField(block)}>{rendered}</div>;
+  return (
+    <>
+      <div data-tina-field={tinaField(block)}>{rendered}</div>
+      {i < blocks.length -1 && tn !== 'PageBlocksHero' && <WaveDivider fill="var(--paper-2)" />}
+    </>
+  );
 })}

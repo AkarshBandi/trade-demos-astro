@@ -1,0 +1,16 @@
+{
+  "--color-paper": "#FCFCF9",
+  "--color-paper-2": "#F6F1EB",
+  "--color-ink": "#0F2439",
+  "--color-line": "#E6DDD4",
+  "--color-accent": "#C1272D",
+  "--r-field": "6px",
+  "--r-card": "12px",
+  "--r-photo": "12px",
+  "--r-pill": "999px",
+  "--font-display": "Source Serif 4",
+  "--font-body": "IBM Plex Sans",
+  "--spacing-4": "4px",
+  "--spacing-8": "8px",
+  "--spacing-16": "16px"
+}

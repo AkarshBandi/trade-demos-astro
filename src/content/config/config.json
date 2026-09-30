@@ -1,11 +1,12 @@
 {
   "seo": {
-    "title": "Blocks Starter",
-    "description": "Reusable TinaCMS + Astro blocks starter"
+    "title": "Trade Demos",
+    "description": "Two calm trade demos — HVAC Apex Air Pros Mesa AZ + Roofing Summit Co Frisco TX. Familiar, plain, phone-first."
   },
   "nav": [
     { "title": "Home", "link": "/" },
-    { "title": "Blog", "link": "/blog/hello-world/" }
+    { "title": "HVAC", "link": "/hvac" },
+    { "title": "Roofing", "link": "/roofing" }
   ],
-  "footerNote": "© 2026 — Built with TinaCMS + Astro"
+  "footerNote": "© 2026 Concept demo — fictional brands Apex Air Pros + Summit Roofing Co. Built with Astro + TinaCMS"
 }

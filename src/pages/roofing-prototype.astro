@@ -1,0 +1,409 @@
+---
+// Roofing Prototype — entirely different layout inspired by roofing domain
+// Craft, layers, portfolio, earth tones — not HVAC urgency grid
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Summit Roofing Co. — Frisco TX — Prototype</title>
+<meta name="description" content="Roofing prototype — Your roof is the crown. GAF Master Elite, Frisco since 2011." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+/* Roofing color graph — 4 hues, material as palette
+   paper #F9F6F0 55% — limestone, warm, home not roof
+   ink #1A2535 35% — charcoal slate, stability, 1px rules
+   line #D8D0BF 5% — dust, for hairlines only
+   copper #B57F4A 5% — patina, only for pill + primary, never gradient
+   No slate/forest/terracotta extra — one accent. Tracking -0.02em manual.
+*/
+:root{
+  --paper:#F9F6F0; --paper-2:#EDE8E0;
+  --ink:#1A2535; --ink-2:#2A3A4D; --ink-3:#6A7685;
+  --line:#D8D0BF; --line-2:#C4BEB0;
+  --copper:#B57F4A; --copper-2:#9A6A3A; --copper-ink:#7C5225;
+  --r-field:6px; --r-card:8px; --r-photo:8px; --r-pill:999px;
+  --shadow-1:0 1px 2px rgba(26,37,53,0.05),0 4px 10px rgba(26,37,53,0.06);
+  --shadow-2:0 8px 20px rgba(26,37,53,0.08);
+  --font-serif:"Source Serif 4",Georgia,serif; --font-sans:"IBM Plex Sans",system-ui,sans-serif; --font-mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{margin:0;font-family:var(--font-sans);color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.container{width:100%;max-width:1120px;margin:0 auto;padding:0 clamp(16px,3vw,32px)}
+/* header — human: solid ink, 1.5px rule, left, no blur */
+.site-header{position:sticky;top:0;z-index:30;background:var(--ink);border-bottom:1.5px solid #243041}
+.site-header__inner{display:flex;align-items:center;justify-content:space-between;gap:20px;height:64px}
+.wordmark{font-family:var(--font-serif);font-weight:700;font-size:1.2rem;color:#fff;letter-spacing:-0.02em}
+.wordmark small{font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.08em;color:#8B9AB0;margin-left:6px}
+.nav{display:flex;align-items:center;gap:18px}
+.nav a{font-size:0.84rem;color:#A8B2BF}
+.nav a:hover{color:#fff;text-decoration:underline;text-underline-offset:4px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.75rem 1.1rem;font-family:var(--font-sans);font-weight:600;font-size:0.88rem;border:1px solid var(--line-2);background:#fff;color:var(--ink);border-radius:var(--r-field);cursor:pointer;transition:transform 200ms cubic-bezier(0.34,1.56,0.64,1),box-shadow 200ms;will-change:transform}
+.btn--copper{background:var(--ink);border-color:var(--ink);color:#fff;transition:transform 220ms cubic-bezier(0.22,1,0.36,1),background 200ms,border-color 200ms,box-shadow 220ms}
+.btn--copper:hover{background:var(--copper);border-color:var(--copper);color:#fff;transform:translateY(-2px);box-shadow:0 10px 24px -8px rgba(181,127,74,0.55)}
+.btn--copper:active{transform:translateY(0);box-shadow:none}
+.btn--copper span{transition:transform 180ms cubic-bezier(0.22,1,0.36,1)}
+.btn--copper:hover span{transform:translateX(4px)}
+.btn--ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,0.26);transition:transform 200ms cubic-bezier(0.22,1,0.36,1),background 180ms,border-color 180ms}
+.btn--ghost:hover{background:rgba(255,255,255,0.12);border-color:#fff;transform:translateY(-1px)}
+.btn--pill{border-radius:var(--r-pill)}
+.btn--phone .ico{display:inline-block;transition:transform 200ms cubic-bezier(0.22,1,0.36,1)}
+.btn--phone:hover .ico{transform:rotate(-14deg) scale(1.12)}
+.btn--phone:hover{animation:ringPulse 1.2s ease-out infinite}
+@keyframes ringPulse{0%{box-shadow:0 0 0 0 rgba(181,127,74,0.45)}70%{box-shadow:0 0 0 10px rgba(181,127,74,0)}100%{box-shadow:0 0 0 0 rgba(181,127,74,0)}}
+/* hero — full-bleed, bottom-left, not 58/42 */
+.hero{position:relative;min-height:560px;display:grid;place-items:end start;overflow:hidden;background:var(--ink)}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.9}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,37,53,0.12) 20%,rgba(26,37,53,0.72) 78%)}
+.hero__content{position:relative;z-index:1;width:100%;max-width:1120px;margin:0 auto;padding:0 clamp(16px,3vw,32px) 36px}
+.kicker{font-family:var(--font-mono);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+.numeral{font-family:var(--font-serif);font-weight:700;font-size:3rem;line-height:1;color:var(--line-2);letter-spacing:-0.02em}
+/* M1 tear-off — media+list, oversized numeral is the ONLY numeral label on roofing */
+.tear{background:var(--paper-2);padding:48px 0}
+.tear__grid{display:grid;grid-template-columns:1fr 1.1fr;gap:28px;align-items:start}
+@media(max-width:900px){.tear__grid{grid-template-columns:1fr}}
+.tear__photo{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 1px 2px rgba(26,37,53,0.05)}
+.tear__photo img{width:100%;height:300px;object-fit:cover;display:block}
+.tear__cap{padding:10px 14px;border-top:1px solid var(--line);font-family:var(--font-mono);font-size:12px;color:var(--ink-2);font-weight:500}
+.punch{list-style:none;padding:0;margin:16px 0 0}
+.punch li{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line);font-size:0.95rem;color:var(--ink)}
+.punch li:last-child{border-bottom:none}
+.punch .tick{flex:none;width:22px;height:22px;border:1px solid var(--line-2);border-radius:4px;display:grid;place-items:center;font-size:0.8rem;color:var(--copper-ink);background:#fff}
+/* M2 ledger — plain H2, ruled rows, copper never body text */
+.ledger{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:48px 0}
+.ledger__label{font-family:var(--font-mono);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-2);font-weight:600;text-align:center}
+.tabs{display:flex;gap:8px;margin-top:20px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory}
+.tab{flex:none;min-height:44px;padding:10px 18px;border:1px solid var(--line-2);border-radius:999px;background:transparent;font-family:var(--font-sans);font-weight:600;font-size:14px;color:var(--ink);cursor:pointer;scroll-snap-align:start;white-space:nowrap}
+.tab:hover{border-color:var(--ink);transform:translateY(-1px)}
+.tab{transition:transform 180ms cubic-bezier(0.22,1,0.36,1),background 180ms,border-color 180ms,color 180ms}
+:global(html.gsap) .reveal{opacity:1}
+:global(html.no-motion) .reveal{opacity:1!important;transform:none!important}
+@media(prefers-reduced-motion:reduce){.btn--phone:hover{animation:none}.work-card:hover{transform:none}.work-card:hover img{transform:none}}
+.tab[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.tabpanel{display:grid;grid-template-columns:1.1fr 0.9fr;gap:28px;margin-top:20px;border-radius:8px;background:#FFFDF9;padding:20px;align-items:start;box-shadow:0 14px 34px -16px rgba(26,37,53,0.22)}
+@media(max-width:860px){.tabpanel{grid-template-columns:1fr}}
+.tabpanel img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;display:block}
+.panel-rule{width:24px;height:2px;background:var(--copper);margin:12px 0}
+.panel-spec{font-family:var(--font-sans);font-size:14px;color:var(--ink);margin-top:10px}
+.panel-link{display:inline-block;margin-top:12px;font-weight:600;font-size:15px;color:var(--ink)}
+.panel-link:hover{color:var(--copper-ink)}
+[hidden]{display:none!important}
+/* M3 jobs — ink band, presentable ledger: serif streets, copper numerals, generous rhythm */
+.jobs{background:var(--ink);color:#fff;padding:56px 0}
+.jobs__inline{font-family:var(--font-mono);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#8B9AB0;font-weight:600}
+.work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:24px}
+@media(max-width:900px){.work-grid{grid-template-columns:1fr}}
+.work-card{background:#fff;border:none;border-radius:8px;overflow:hidden;box-shadow:0 14px 30px -14px rgba(0,0,0,0.35);transition:transform 260ms cubic-bezier(0.22,1,0.36,1),box-shadow 260ms}
+.work-card:hover{transform:translateY(-4px);box-shadow:0 22px 44px -14px rgba(0,0,0,0.4)}
+.work-card.featured{border-top:2px solid var(--copper)}
+.work-card img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;transition:transform 600ms cubic-bezier(0.22,1,0.36,1)}
+.work-card:hover img{transform:scale(1.04)}
+.work-eyebrow{font-family:var(--font-sans);font-size:12px;font-weight:600;color:var(--ink-2);margin:14px 16px 0}
+.work-title{font-family:var(--font-serif);font-size:20px;color:var(--ink);margin:4px 16px 0;letter-spacing:-0.008em}
+.work-cap{font-family:var(--font-sans);font-size:13px;color:var(--ink-2);margin:4px 16px 0}
+.work-quote{font-size:14px;font-style:italic;color:var(--ink-2);margin:10px 16px 16px;line-height:1.5}
+.journal{display:flex;gap:12px;align-items:center;margin-top:24px;flex-wrap:wrap}
+.journal img{width:96px;height:72px;object-fit:cover;border-radius:6px;border:1px solid #2E4258;display:block;transition:transform 220ms cubic-bezier(0.22,1,0.36,1)}
+.journal img:hover{transform:scale(1.06)}
+@media(max-width:560px){.journal img{width:calc(50% - 6px);height:96px}}
+.album-link{color:#fff;font-size:15px;font-weight:600;min-height:44px;display:inline-flex;align-items:center}
+.album-link:hover{color:var(--copper)}
+.hero h1{font-family:var(--font-serif);font-weight:700;line-height:1.02;letter-spacing:-0.02em;font-size:clamp(2.2rem,4vw,3.4rem);color:#fff;margin-top:10px;max-width:18ch} /* capped 3.4 not 3.8 */
+.hero h1 em{font-style:normal;color:#fff;border-bottom:2px solid rgba(181,127,74,0.5);padding-bottom:1px} /* copper underline, not color wash */
+.lede{max-width:36rem;margin-top:12px;color:#D8DDE3;font-size:1.02rem;line-height:1.6}
+.hero__actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.trustbar{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px 14px;font-family:var(--font-mono);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:#A8B2BF}
+.trustbar strong{color:#fff}
+/* wave — one, paper-2 fill, not limestone */
+.wave{position:relative;height:28px;overflow:hidden;line-height:0}
+.wave svg{display:block;width:calc(100% + 40px);height:28px;position:relative;left:-20px}
+.wave .b{animation:drift 7s ease-in-out infinite}
+.wave .f{animation:drift 4.5s ease-in-out infinite reverse}
+/* reveal — subtle 8px, no 80/160 stagger everywhere */
+.reveal{opacity:0;transition:opacity 420ms}
+.reveal.in{opacity:1}
+/* materials — horizontal swatches, not 3-tier pricing grid (different job: show craft, not sell plan) */
+.materials{max-width:1120px;margin:0 auto;padding:48px clamp(16px,3vw,32px)}
+.materials__grid{display:grid;gap:14px;grid-template-columns:repeat(4,1fr)}
+@media(max-width:900px){.materials__grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.materials__grid{grid-template-columns:1fr}}
+.mat-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-card);overflow:hidden;transition:transform 220ms cubic-bezier(0.34,1.56,0.64,1),box-shadow 200ms} /* spring */
+.mat-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-2)}
+.mat-card__swatch{height:86px;display:grid;place-items:center;font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:#fff;position:relative}
+.mat-card__swatch::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.0),rgba(0,0,0,0.14))}
+.mat-card__body{padding:14px}
+.mat-card h3{font-size:1rem;margin-top:2px}
+.mat-card p{font-size:0.86rem;color:var(--ink-3);margin-top:4px;line-height:1.6}
+/* process — vertical timeline, not grid */
+.process{max-width:1120px;margin:0 auto;padding:48px clamp(16px,3vw,32px);display:grid;grid-template-columns:0.9fr 1.1fr;gap:32px}
+@media(max-width:900px){.process{grid-template-columns:1fr}}
+.timeline{position:relative;padding-left:22px;border-left:1px solid var(--line)}
+.timeline::before{content:"";position:absolute;left:-1px;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--copper),transparent 80%)}
+.t-item{position:relative;padding:14px 0 14px 16px;border-bottom:1px solid var(--line)}
+.t-item::before{content:"";position:absolute;left:-23px;top:20px;width:8px;height:8px;background:var(--copper);border:2px solid var(--paper);border-radius:50%}
+.t-num{font-family:var(--font-mono);font-size:11px;letter-spacing:0.08em;color:var(--copper);font-weight:600}
+.t-item h3{margin-top:4px;font-size:1.05rem}
+.t-item p{font-size:0.9rem;color:var(--ink-3);margin-top:4px}
+/* portfolio — straight, hairline, whisper shadow, no rotation */
+.portfolio{max-width:1120px;margin:0 auto;padding:48px clamp(16px,3vw,32px)}
+.portfolio__grid{display:grid;grid-template-columns:1.3fr 0.7fr;gap:16px}
+@media(max-width:860px){.portfolio__grid{grid-template-columns:1fr}}
+.port-card{position:relative;overflow:hidden;border-radius:var(--r-card);background:#fff;border:1px solid var(--line);box-shadow:0 1px 2px rgba(26,37,53,0.04);transition:transform 220ms cubic-bezier(0.34,1.56,0.64,1),box-shadow 200ms}
+.port-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px -12px rgba(26,37,53,0.14)}
+.port-card img{width:100%;height:100%;object-fit:cover;display:block}
+.port-card__label{position:absolute;left:12px;bottom:12px;background:rgba(26,37,53,0.92);color:#fff;font-family:var(--font-mono);font-size:11px;letter-spacing:0.06em;padding:6px 10px;border-radius:var(--r-pill)}
+/* stats/testi — distinct ladder */
+.stats{max-width:1120px;margin:0 auto;padding:40px clamp(16px,3vw,32px);display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center;background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+@media(max-width:800px){.stats{grid-template-columns:1fr 1fr}}
+.stat__val{font-family:var(--font-serif);font-weight:700;font-size:1.9rem}
+.stat__label{font-family:var(--font-mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3);margin-top:4px}
+.marquee{ --gap:16px; display:flex; gap:var(--gap); overflow:hidden; mask-image:linear-gradient(to right, transparent, black 8%, black 92%, transparent) }
+.marquee__track{display:flex; gap:var(--gap); will-change:transform; animation:marquee 32s linear infinite}
+.marquee:hover .marquee__track,.marquee:focus-within .marquee__track{animation-play-state:paused}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.marquee__track{animation:none;transform:none;overflow-x:auto;scroll-snap-type:x mandatory}}
+.testi-card{width:320px;flex-shrink:0;background:#fff;border:none;border-radius:12px;padding:16px;box-shadow:0 10px 26px -14px rgba(26,37,53,0.25)}
+.testi-card--wide{width:360px}
+.testi{max-width:680px;margin:0 auto;padding:36px clamp(16px,3vw,32px);text-align:center;border:1px solid var(--line);border-radius:8px;background:#fff}
+.testi blockquote{font-family:var(--font-serif);font-size:1.2rem;line-height:1.5;font-style:italic}
+/* cta — warm limestone, not ink */
+.cta{max-width:1120px;margin:40px auto;padding:32px clamp(16px,3vw,32px);background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r-lg);display:grid;grid-template-columns:1.1fr 0.9fr;gap:20px;align-items:center}
+@media(max-width:860px){.cta{grid-template-columns:1fr}}
+.field{width:100%;padding:0.78rem 0.9rem;border:1px solid var(--line-2);background:#fff;border-radius:var(--r);font-family:var(--font-sans);font-size:0.95rem}
+.field::placeholder{color:#8B95A3}
+.footer{background:var(--ink);color:#D8DDE3;padding:32px 0 24px;border-top:4px solid var(--copper)}
+@media(max-width:860px){.nav a:not(.btn){display:none}}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a href="/roofing-prototype" class="wordmark">SUMMIT ROOFING CO. <small>FRISCO · SINCE 2011</small> <span style="display:inline-block;margin-left:8px;background:var(--paper-2);border:1px solid var(--line);color:var(--ink);font-family:var(--font-mono);font-size:9px;letter-spacing:0.08em;text-transform:uppercase;padding:2px 6px;border-radius:var(--r-pill);position:relative;top:-1px">Demo</span></a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#tearoff">Tear-off</a><a href="#ledger">Ledger</a><a href="#jobs">Jobs</a>
+      <a href="#contact" class="btn btn--ghost" style="padding:0.55rem 0.9rem;font-size:0.84rem;background:transparent;color:#fff;border-color:rgba(255,255,255,0.26);border-radius:var(--r-field)">Check coverage</a>
+      <a href="tel:2145550283" class="btn btn--copper btn--pill" style="padding:0.6rem 1rem;min-height:48px">(214) 555-0283 →</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="top" data-job="You just thought: Is my roof the crown — or a liability?">
+  <img src="https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=1920" alt="Frisco shingle roof — Summit" width="1920" height="1080" loading="eager" decoding="async" fetchpriority="high" />
+  <div class="hero__content">
+    <p class="kicker reveal in">Frisco · McKinney · Prosper — Since 2011</p>
+    <h1 class="reveal in">Your roof is<br><em>the crown.</em> We keep it that way.</h1>
+    <p class="lede reveal d1">Family crew in Frisco. We photo every slope — you keep the file. If you can wait a season, we say so.</p>
+    <div class="hero__actions reveal d1">
+      <a href="#contact" class="btn btn--copper" style="border-radius:6px">Free inspection <span aria-hidden>→</span></a>
+      <a href="tel:2145550283" class="btn btn--ghost" style="border-radius:6px">Call (214) 555-0283</a>
+    </div>
+    <p class="small reveal d2" style="margin-top:14px;color:#D8DDE3;max-width:38rem">Frisco shop — 6950 Preston. Come see the slate and copper samples. No call center.</p>
+  </div>
+</section>
+
+<section class="tear reveal" id="tearoff">
+  <div class="container tear__grid">
+    <div>
+      <div class="tear__photo">
+        <img src="https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Deck after tear-off, Frisco" loading="lazy" decoding="async" />
+        <div class="tear__cap">2814 Maple, deck after tear-off — you keep this photo</div>
+      </div>
+    </div>
+    <div>
+      <div class="numeral" aria-hidden="true">01</div>
+      <h2 style="margin-top:4px">What we open up</h2>
+      <ul class="punch">
+        <li><span class="tick">✓</span><span>Full tear-off to deck, no overlay. Rot marked, photo filed.</span></li>
+        <li><span class="tick">✓</span><span>Ice and water shield in valleys, synthetic underlayment everywhere.</span></li>
+        <li><span class="tick">✓</span><span>Drip edge, starter strip, 6-nail zone, ridge cap, flashing.</span></li>
+        <li><span class="tick">✓</span><span>Magnetic sweep before we leave. 5-year walk-through.</span></li>
+      </ul>
+      <a href="#contact" class="btn btn--copper" style="margin-top:16px;border-radius:6px;min-height:48px">See a tear-off <span aria-hidden>→</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="ledger reveal" id="ledger">
+  <div class="container">
+    <p class="ledger__label">Material ledger</p>
+    <h2 style="text-align:center;margin-top:8px">Pick the roof, not the swatch</h2>
+    <p style="text-align:center;color:var(--ink-2);margin-top:8px;max-width:56ch;margin-left:auto;margin-right:auto">Four roofs that survive Frisco hail, HOAs, and August heat. Tap through.</p>
+    <div class="tabs" role="tablist" aria-label="Roof materials">
+      <button class="tab" role="tab" aria-selected="true" aria-controls="panel-shingle" id="tab-shingle" type="button">Architectural shingle</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="panel-metal" id="tab-metal" type="button" tabindex="-1">Standing-seam metal</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="panel-cedar" id="tab-cedar" type="button" tabindex="-1">Cedar shake</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="panel-slate" id="tab-slate" type="button" tabindex="-1">Synthetic slate</button>
+    </div>
+    <div class="tabpanel" role="tabpanel" id="panel-shingle" aria-labelledby="tab-shingle">
+      <img src="https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Frisco home with architectural shingle roof" loading="lazy" decoding="async" />
+      <div><h3 style="font-family:var(--font-serif);font-size:24px;color:var(--ink)">Architectural shingle</h3><div class="panel-rule" aria-hidden="true"></div><p style="font-size:15px;color:var(--ink-2);line-height:1.5">The quiet default for Frisco subdivisions. Dimensional profile shrugs off hail, and HOAs approve it sight unseen.</p><p class="panel-spec">20–30 yr · $X band · Quiet streets</p><a class="panel-link" href="#contact">What's included →</a></div>
+    </div>
+    <div class="tabpanel" role="tabpanel" id="panel-metal" aria-labelledby="tab-metal" hidden>
+      <img src="https://images.pexels.com/photos/280222/pexels-photo-280222.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Frisco home with standing-seam metal roof" loading="lazy" decoding="async" />
+      <div><h3 style="font-family:var(--font-serif);font-size:24px;color:var(--ink)">Standing-seam metal</h3><div class="panel-rule" aria-hidden="true"></div><p style="font-size:15px;color:var(--ink-2);line-height:1.5">For storm-belt roofs that take the hit. Panels run ridge to eave with no exposed fasteners to back out.</p><p class="panel-spec">40–70 yr · $X band · Storm belt</p><a class="panel-link" href="#contact">What's included →</a></div>
+    </div>
+    <div class="tabpanel" role="tabpanel" id="panel-cedar" aria-labelledby="tab-cedar" hidden>
+      <img src="https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Frisco home with cedar shake roof" loading="lazy" decoding="async" />
+      <div><h3 style="font-family:var(--font-serif);font-size:24px;color:var(--ink)">Cedar shake</h3><div class="panel-rule" aria-hidden="true"></div><p style="font-size:15px;color:var(--ink-2);line-height:1.5">Heritage look for HOA blocks that demand it. Hand-split texture, treated against Texas humidity.</p><p class="panel-spec">25–30 yr · $X band · HOA blocks</p><a class="panel-link" href="#contact">What's included →</a></div>
+    </div>
+    <div class="tabpanel" role="tabpanel" id="panel-slate" aria-labelledby="tab-slate" hidden>
+      <img src="https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=1200&h=900&fit=crop" alt="Frisco home with slate-look roof" loading="lazy" decoding="async" />
+      <div><h3 style="font-family:var(--font-serif);font-size:24px;color:var(--ink)">Synthetic slate</h3><div class="panel-rule" aria-hidden="true"></div><p style="font-size:15px;color:var(--ink-2);line-height:1.5">Slate look without slate weight. Your trusses never know the difference; the street does.</p><p class="panel-spec">40–50 yr · $X band · Slate look</p><a class="panel-link" href="#contact">What's included →</a></div>
+    </div>
+    <p style="font-size:13px;color:var(--ink-2);margin-top:14px;text-align:center">Bands include tear-off and GAF/Owens Corning system. Final quote after attic + deck check.</p>
+  </div>
+</section>
+
+<section class="jobs reveal" id="jobs" style="background:var(--ink);padding:48px 0">
+  <div class="container">
+    <p class="jobs__inline">Recent work — Frisco</p>
+    <h2 style="color:#fff;margin-top:8px">Three streets, finished this month</h2>
+    <div class="work-grid">
+      <article class="work-card featured"><img src="https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Full shingle replacement on Teel Parkway home" loading="lazy" decoding="async" /><p class="work-eyebrow">Full replacement</p><h3 class="work-title">Teel Pkwy — Phillips Creek Ranch</h3><p class="work-cap">GAF Timberline HDZ · 32 sq · September</p><p class="work-quote">"Yard spotless, adjuster handled." — J.K.</p></article>
+      <article class="work-card"><img src="https://images.pexels.com/photos/280222/pexels-photo-280222.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Hail restoration on Starwood home" loading="lazy" decoding="async" /><p class="work-eyebrow">Hail restoration</p><h3 class="work-title">Starwood — Frisco West</h3><p class="work-cap">Storm rebuild with deck repair · 28 sq · August</p><p class="work-quote">"Rot marked, insurer filed, zero callbacks." — M.T.</p></article>
+      <article class="work-card"><img src="https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Metal accent roof on Richwoods home" loading="lazy" decoding="async" /><p class="work-eyebrow">Metal accent + shingle</p><h3 class="work-title">Richwoods — Chapel Creek</h3><p class="work-cap">Standing-seam accent · 24 sq · September</p><p class="work-quote">"Flashing like it's their own home." — D.K.</p></article>
+    </div>
+    <div class="journal" aria-label="Crew journal">
+      <img src="https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Tear-off in progress" loading="lazy" decoding="async" />
+      <img src="https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Decking exposed" loading="lazy" decoding="async" />
+      <img src="https://images.pexels.com/photos/280222/pexels-photo-280222.jpeg?auto=compress&cs=tinysrgb&w=400" alt="New shingles going on" loading="lazy" decoding="async" />
+      <img src="https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Final cleanup" loading="lazy" decoding="async" />
+      <a class="album-link" href="#contact">View the Starwood job album →</a>
+    </div>
+  </div>
+</section>
+
+<section class="reveal" data-job="Do builders trust you?" style="background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:40px 0">
+  <div class="container" style="max-width:1120px;margin:0 auto;padding:0 clamp(16px,3vw,32px);text-align:center">
+    <p class="kicker" style="text-align:center">Builders, not stars</p>
+    <h2 style="text-align:center;margin-top:8px">Zero callbacks</h2>
+    <p style="text-align:center;opacity:0.7;margin-top:8px">4.8 on Google • 298 reviews • Pause on hover</p>
+  </div>
+  <div class="marquee" role="region" aria-label="Customer testimonials scrolling" style="margin-top:20px">
+    <div class="marquee__track">
+      <article class="testi-card"><div style="color:var(--copper)">★★★★★</div><p style="margin-top:8px;font-size:15px;line-height:1.5">“Every roof I’ve subbed to Summit — zero callbacks. They flash like it’s their own home.”</p><div style="margin-top:12px;display:flex;gap:8px;align-items:center;border-top:1px solid var(--line);padding-top:10px"><div style="width:28px;height:28px;border-radius:50%;background:var(--line)"></div><div><p style="font-size:0.88rem;font-weight:600">Marcus T.</p><p style="font-family:var(--font-mono);font-size:11px;color:var(--ink-3)">Frisco • Builder • Aug 2024</p></div></div></article>
+      <article class="testi-card testi-card--wide"><div style="color:var(--copper)">★★★★★</div><p style="margin-top:8px;font-size:15px;line-height:1.5">“Hail damage in 2 days. Insurance handled, copper valleys perfect.”</p><div style="margin-top:12px;display:flex;gap:8px;align-items:center;border-top:1px solid var(--line);padding-top:10px"><div style="width:28px;height:28px;border-radius:50%;background:var(--line)"></div><div><p style="font-size:0.88rem;font-weight:600">Jen L.</p><p style="font-family:var(--font-mono);font-size:11px;color:var(--ink-3)">McKinney • GAF • Jun 2025</p></div></div></article>
+      <article class="testi-card"><div style="color:var(--copper)">★★★★★</div><p style="margin-top:8px;font-size:15px;line-height:1.5">“Showed me the tear-off photos — deck rot circled. No upsell.”</p><div style="margin-top:12px;display:flex;gap:8px;align-items:center;border-top:1px solid var(--line);padding-top:10px"><div style="width:28px;height:28px;border-radius:50%;background:var(--line)"></div><div><p style="font-size:0.88rem;font-weight:600">Diane K.</p><p style="font-family:var(--font-mono);font-size:11px;color:var(--ink-3)">Prosper • Tile • Sep 2025</p></div></div></article>
+      <article class="testi-card" aria-hidden="true"><div style="color:var(--copper)">★★★★★</div><p style="margin-top:8px;font-size:15px;line-height:1.5">“Every roof I’ve subbed to Summit — zero callbacks. They flash like it’s their own home.”</p><div style="margin-top:12px;display:flex;gap:8px;align-items:center;border-top:1px solid var(--line);padding-top:10px"><div style="width:28px;height:28px;border-radius:50%;background:var(--line)"></div><div><p style="font-size:0.88rem;font-weight:600">Marcus T.</p><p style="font-family:var(--font-mono);font-size:11px;color:var(--ink-3)">Frisco • Builder • Aug 2024</p></div></div></article>
+      <article class="testi-card testi-card--wide" aria-hidden="true"><div style="color:var(--copper)">★★★★★</div><p style="margin-top:8px;font-size:15px;line-height:1.5">“Hail damage in 2 days. Insurance handled, copper valleys perfect.”</p><div style="margin-top:12px;display:flex;gap:8px;align-items:center;border-top:1px solid var(--line);padding-top:10px"><div style="width:28px;height:28px;border-radius:50%;background:var(--line)"></div><div><p style="font-size:0.88rem;font-weight:600">Jen L.</p><p style="font-family:var(--font-mono);font-size:11px;color:var(--ink-3)">McKinney • GAF • Jun 2025</p></div></div></article>
+      <article class="testi-card" aria-hidden="true"><div style="color:var(--copper)">★★★★★</div><p style="margin-top:8px;font-size:15px;line-height:1.5">“Showed me the tear-off photos — deck rot circled. No upsell.”</p><div style="margin-top:12px;display:flex;gap:8px;align-items:center;border-top:1px solid var(--line);padding-top:10px"><div style="width:28px;height:28px;border-radius:50%;background:var(--line)"></div><div><p style="font-size:0.88rem;font-weight:600">Diane K.</p><p style="font-family:var(--font-mono);font-size:11px;color:var(--ink-3)">Prosper • Tile • Sep 2025</p></div></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="contact" data-job="Do you cover my street — and what’s next?">
+  <div>
+    <p class="kicker">Your street next</p>
+    <h2 style="margin-top:8px">One inspection. Photos you keep.</h2>
+    <p style="opacity:0.7;margin-top:8px;max-width:38ch">If you can wait, we say so.</p>
+    <div style="display:flex;gap:8px;max-width:380px;margin-top:14px">
+      <input class="field" placeholder="75034" inputmode="numeric" aria-label="Zip" />
+      <button class="btn btn--copper">Check</button>
+    </div>
+    <p class="small" style="color:var(--ink-3);margin-top:8px">Try 75034 Frisco, 75070 McKinney — we confirm in 4 min.</p>
+  </div>
+  <div style="background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:18px">
+    <p style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3)">Free inspection — no spam</p>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <input class="field" placeholder="you@example.com" type="email" style="flex:1" />
+      <button class="btn btn--copper">Get photos →</button>
+    </div>
+    <p style="font-family:var(--font-mono);font-size:11px;color:var(--ink-3);margin-top:8px">No spam. We confirm in 4 min.</p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container" style="display:grid;grid-template-columns:1.4fr 0.8fr 0.8fr;gap:20px">
+    <div><p class="wordmark" style="color:#fff">SUMMIT ROOFING CO. <small style="color:#8B9AB0">FRISCO</small></p><p style="color:#A8B2BF;margin-top:8px;max-width:34ch;font-size:0.9rem">Demo build — Summit is fictional. Slate/copper specs and 5-yr sweep are from real Frisco installs — photos are Pexels placeholders.</p></div>
+    <div><p style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--slate)">Demos</p><a href="/prototype" style="color:#A8B2BF;font-size:0.9rem">HVAC cool/urgency</a><br><a href="/roofing-prototype" style="color:#fff;font-size:0.9rem">Roofing earth/craft (this)</a></div>
+    <div><p style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--slate)">Call</p><a href="tel:2145550283" style="color:#fff;font-weight:600">(214) 555-0283</a></div>
+  </div>
+</footer>
+
+<script is:inline>/* safety: if motion setup stalls, never leave sections hidden */setTimeout(function(){if(!document.documentElement.dataset.motion)document.documentElement.classList.add('no-motion')},2500);</script>
+<script>
+import gsap from 'gsap';
+import {ScrollTrigger} from 'gsap/ScrollTrigger';
+import Lenis from 'lenis';
+document.documentElement.dataset.motion='ok';document.documentElement.classList.remove('no-motion');
+const hdr=document.querySelector('.site-header');
+if(hdr)addEventListener('scroll',()=>hdr.style.background=scrollY>8?'rgba(26,37,53,0.98)':'rgba(26,37,53,0.96)',{passive:true});
+const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let motionOk=false;
+try{
+if(!reduceMotion){
+  gsap.registerPlugin(ScrollTrigger);
+  const lenis=new Lenis({duration:0.9,smoothWheel:true});
+  lenis.on('scroll',ScrollTrigger.update);
+  gsap.ticker.add((t)=>lenis.raf(t*1000));
+  gsap.ticker.lagSmoothing(0);
+  document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+    const id=a.getAttribute('href');
+    if(id&&id.length>1){const target=document.querySelector(id);
+      if(target){e.preventDefault();lenis.scrollTo(target,{offset:-72})}}
+  }));
+  motionOk=true;
+}
+}catch(err){motionOk=false}
+if(motionOk){
+  document.documentElement.classList.add('gsap');
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.timeline({defaults:{ease:'power3.out'}})
+    .from('.hero .kicker',{y:18,opacity:0,duration:0.6},0.1)
+    .from('.hero h1',{y:28,opacity:0,duration:0.7},0.2)
+    .from('.hero .lede',{y:20,opacity:0,duration:0.6},0.32)
+    .from('.hero__actions',{y:16,opacity:0,duration:0.5},0.42)
+    .from('.hero__content > p.small',{opacity:0,duration:0.5},0.5);
+  gsap.to('.hero img',{yPercent:8,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+}
+/* Visibility is ALWAYS owned by IO (.in) — GSAP only adds transform motion on top, never opacity. Nothing can get stuck hidden. */
+const riseGroups=new Map();
+document.querySelectorAll('.work-grid .work-card,.journal img,.tabs .tab').forEach(el=>{
+  const key=el.parentElement;
+  if(!riseGroups.has(key))riseGroups.set(key,[]);
+  el.dataset.rise=riseGroups.get(key).length;
+  riseGroups.get(key).push(el);
+});
+const obs=new IntersectionObserver((es)=>{es.forEach(e=>{
+  if(!e.isIntersecting)return;
+  const el=e.target;
+  const alreadyIn=el.classList.contains('in');
+  el.classList.add('in');
+  if(motionOk&&!alreadyIn&&(el.classList.contains('work-card')||el.classList.contains('tab')||el.closest('.journal'))){
+    gsap.fromTo(el,{y:26},{y:0,duration:0.6,delay:Math.min(parseInt(el.dataset.rise||'0',10)*0.08,0.4),ease:'power3.out',overwrite:'auto'});
+  }else if(motionOk&&!alreadyIn&&el.classList.contains('reveal')){
+    gsap.fromTo(el,{y:22},{y:0,duration:0.6,ease:'power3.out',overwrite:'auto'});
+  }
+  if(el.hasAttribute('data-count')){const t=parseInt(el.getAttribute('data-count'));let c=0;const s=Math.max(1,Math.ceil(t/36));const tick=()=>{c=Math.min(t,c+s);el.textContent=c+(t>100?'+':''); if(c<t) requestAnimationFrame(tick)}; tick()}
+  obs.unobserve(el);
+})},{threshold:0.15});
+document.querySelectorAll('.reveal,[data-count]').forEach(el=>obs.observe(el));
+const tabs=[...document.querySelectorAll('[role="tab"]')];
+tabs.forEach((tab,i)=>{
+  tab.addEventListener('click',()=>selectTab(i));
+  tab.addEventListener('keydown',e=>{
+    if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft')return;
+    e.preventDefault();
+    const n=(i+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length;
+    selectTab(n);tabs[n].focus();
+  });
+});
+function selectTab(i){
+  tabs.forEach((t,j)=>{
+    const on=j===i;
+    t.setAttribute('aria-selected',on?'true':'false');
+    t.tabIndex=on?0:-1;
+    const panel=document.getElementById(t.getAttribute('aria-controls'));
+    panel.hidden=!on;
+    if(on&&motionOk)gsap.fromTo(panel,{y:14,opacity:0},{y:0,opacity:1,duration:0.4,ease:'power2.out'});
+  });
+}
+</script>
+</body>
+</html>
