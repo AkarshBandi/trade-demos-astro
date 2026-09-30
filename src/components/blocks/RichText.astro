@@ -8,7 +8,7 @@ const { data } = Astro.props as { data: any };
   {data?.headline && <h2 style="font-size:clamp(1.6rem,4vw,2.2rem);margin:8px 0 16px" data-tina-field={tinaField(data, 'headline')}>{data.headline}</h2>}
   {data?.body && (
     <div style="line-height:1.8;opacity:0.85" data-tina-field={tinaField(data, 'body')}>
-      {data.body.includes('<div') || data.body.includes('<span') ? (
+      {typeof data.body === 'string' && (data.body.includes('<div') || data.body.includes('<span')) ? (
         <div set:html={data.body} />
       ) : (
         <TinaMarkdown content={data.body} />
