@@ -1,5 +1,6 @@
 import type { IslandRegistry } from '@tinacms/astro/experimental';
 import type { QueryResult } from '@tinacms/astro/data';
+import type { PageQuery, ConfigQuery } from '../../../tina/__generated__/types';
 import type { CmsPage, CmsConfig } from './data';
 import PageBody from '../../components/islands/PageBody.astro';
 import Header from '../../components/Header.astro';
