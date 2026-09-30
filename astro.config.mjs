@@ -3,14 +3,13 @@ import cloudflare from '@astrojs/cloudflare';
 import mdx from '@astrojs/mdx';
 import tina from '@tinacms/astro/integration';
 import { tinaAdminDevRedirect } from '@tinacms/astro/vite';
-import react from '@astrojs/react';
 
 // Keep static for blistering-fast CDN; island route stays dynamic
 export default defineConfig({
-  site: process.env.SITE_URL || 'https://trade-demos-astro.workers.dev',
-  output: 'server',
+  site: process.env.SITE_URL || 'https://trade-demos-astro.akarshbandi82.workers.dev',
+  output: 'static',
   adapter: cloudflare({ platformProxy: { enabled: true } }),
-  integrations: [mdx(), tina(), react()],
+  integrations: [mdx(), tina()],
   image: {
     layout: 'constrained',
     remotePatterns: [
