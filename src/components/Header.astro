@@ -3,20 +3,28 @@ import { tinaField } from '@tinacms/astro/tina-field';
 import type { CmsConfig } from '../lib/tina/data';
 interface Props { config?: CmsConfig | null; pathname?: string; }
 const { config, pathname = '/' } = Astro.props as any;
-const nav = (config as any)?.nav ?? [
+const header = (config as any)?.header ?? null;
+const nav = header?.nav ?? (config as any)?.nav ?? [
   { title: 'Home', link: '/' },
   { title: 'HVAC', link: '/hvac' },
   { title: 'Roofing', link: '/roofing' },
 ];
-const siteTitle = (config as any)?.seo?.title ?? 'Trade Demos';
+const actions = header?.actions ?? [
+  { label: 'HVAC', link: '/hvac', variant: 'ghost' },
+  { label: 'Roofing', link: '/roofing', variant: 'solid' },
+];
+const siteTitle = header?.wordmark ?? (config as any)?.seo?.title ?? 'Trade Demos';
+const wordmarkSub = header?.wordmarkSub ?? '';
+const badge = header?.badge ?? '';
+const menuLabel = header?.menuLabel ?? 'Menu';
 const isCurrent = (link: string) => pathname === link;
 ---
 <header class="site-header">
   <div class="container site-header__inner">
-    <a href="/" class="wordmark" data-tina-field={tinaField(config as any, 'seo')}>
+    <a href="/" class="wordmark" data-tina-field={tinaField(header as any, 'wordmark')}>
       <span class="wordmark__name">{siteTitle}</span>
-      <small>MESA · FRISCO</small>
-      <span class="wordmark__badge">Demo</span>
+      {wordmarkSub && <small data-tina-field={tinaField(header as any, 'wordmarkSub')}>{wordmarkSub}</small>}
+      {badge && <span class="wordmark__badge" data-tina-field={tinaField(header as any, 'badge')}>{badge}</span>}
     </a>
 
     <!--
@@ -42,10 +50,10 @@ const isCurrent = (link: string) => pathname === link;
       data-nav-toggle
     >
       <span class="nav-toggle__bars" aria-hidden="true"></span>
-      <span class="nav-toggle__label">Menu</span>
+      <span class="nav-toggle__label" data-tina-field={tinaField(header as any, 'menuLabel')}>{menuLabel}</span>
     </button>
 
-    <nav class="nav" aria-label="Primary" data-tina-field={tinaField(config as any, 'nav')}>
+    <nav class="nav" aria-label="Primary" data-tina-field={tinaField(header as any, 'nav')}>
       {nav.map((item: any) => (
         <a
           href={item.link}
@@ -53,8 +61,13 @@ const isCurrent = (link: string) => pathname === link;
           style={`text-decoration:none;color:inherit;opacity:${isCurrent(item.link) ? '1' : '0.7'};font-size:0.86rem`}
         >{item.title}</a>
       ))}
-      <a href="/hvac" class="btn btn--ghost" style="padding:0.5rem 0.85rem;font-size:0.84rem">HVAC</a>
-      <a href="/roofing" class="btn" style="padding:0.55rem 0.9rem;font-size:0.84rem">Roofing</a>
+      {actions.map((a: any) => (
+        <a
+          href={a.link}
+          class={a.variant === 'solid' ? 'btn' : 'btn btn--ghost'}
+          style="padding:0.55rem 0.9rem;font-size:0.84rem"
+        >{a.label}</a>
+      ))}
     </nav>
   </div>
 

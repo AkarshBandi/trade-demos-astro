@@ -3,33 +3,36 @@ import { tinaField } from '@tinacms/astro/tina-field';
 import type { CmsConfig } from '../lib/tina/data';
 interface Props { config?: CmsConfig | null; }
 const { config } = Astro.props as any;
+const footer = (config as any)?.footer ?? {};
+const wordmark = footer.wordmark ?? (config as any)?.seo?.title ?? 'Trade Demos';
+const wordmarkSub = footer.wordmarkSub ?? '';
+const blurb = footer.blurb ?? '';
+const columns = Array.isArray(footer.columns) ? footer.columns : [];
+const footerNote = footer.footerNote ?? '';
+const credit = footer.credit ?? '';
 ---
 <footer class="site-footer">
   <div class="container">
     <div style="display:grid;grid-template-columns:1.4fr 0.8fr 0.8fr 0.8fr;gap:2rem;padding-bottom:1.5rem">
       <div>
-        <p class="wordmark" style="color:#fff">{(config as any)?.seo?.title ?? 'Trade Demos'} <small style="color:#8B9AB0">MESA · FRISCO</small></p>
-        <p class="small" style="color:#A8B2BF;margin-top:0.6rem;max-width:36ch">Demo builds — Apex (Mesa) + Summit (Frisco) are fictional. Pricing/materials from nearby real shops, photos are Pexels placeholders. No badge wall — just the shop.</p>
+        <p class="wordmark" style="color:#fff">
+          <span data-tina-field={tinaField(footer, 'wordmark')}>{wordmark}</span>
+          {wordmarkSub && <small style="color:#8B9AB0" data-tina-field={tinaField(footer, 'wordmarkSub')}>{wordmarkSub}</small>}
+        </p>
+        {blurb && <p class="small" style="color:#A8B2BF;margin-top:0.6rem;max-width:36ch" data-tina-field={tinaField(footer, 'blurb')}>{blurb}</p>}
       </div>
-      <nav style="display:flex;flex-direction:column;gap:0.5rem">
-        <p style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#8B9AB0">Demos</p>
-        <a href="/hvac" class="small">Apex Air Pros — HVAC</a>
-        <a href="/roofing" class="small">Summit Roofing Co. — Roofing</a>
-      </nav>
-      <nav style="display:flex;flex-direction:column;gap:0.5rem">
-        <p style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#8B9AB0">Proof</p>
-        <a href="/hvac#proof" class="small">Reviews + stats</a>
-        <a href="/roofing#proof" class="small">Materials + process</a>
-      </nav>
-      <nav style="display:flex;flex-direction:column;gap:0.5rem">
-        <p style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#8B9AB0">Contact</p>
-        <a href="tel:4806606150" class="small" style="color:#fff;font-weight:600">(480) 660-6150 — Mesa</a>
-        <a href="tel:2145550283" class="small" style="color:#fff;font-weight:600">(214) 555-0283 — Frisco</a>
-      </nav>
+      {columns.map((col: any) => (
+        <nav style="display:flex;flex-direction:column;gap:0.5rem" data-tina-field={tinaField(footer, 'columns')}>
+          <p style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#8B9AB0">{col.heading}</p>
+          {(col.links ?? []).map((l: any) => (
+            <a href={l.link} class="small">{l.title}</a>
+          ))}
+        </nav>
+      ))}
     </div>
     <div style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;border-top:1px solid #263445;padding-top:1rem;font-size:0.82rem;color:#6A7685">
-      <span data-tina-field={tinaField(config as any, 'footerNote')}>{(config as any)?.footerNote ?? '© 2026 Concept demo — fictional brands'}</span>
-      <span class="mono">Built with Astro + TinaCMS</span>
+      {footerNote && <span data-tina-field={tinaField(footer, 'footerNote')}>{footerNote}</span>}
+      {credit && <span class="mono" data-tina-field={tinaField(footer, 'credit')}>{credit}</span>}
     </div>
   </div>
 </footer>

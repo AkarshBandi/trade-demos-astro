@@ -3,10 +3,49 @@
     "title": "Trade Demos",
     "description": "Two calm trade demos — HVAC Apex Air Pros Mesa AZ + Roofing Summit Co Frisco TX. Familiar, plain, phone-first."
   },
-  "nav": [
-    { "title": "Home", "link": "/" },
-    { "title": "HVAC", "link": "/hvac" },
-    { "title": "Roofing", "link": "/roofing" }
-  ],
-  "footerNote": "© 2026 Concept demo — fictional brands Apex Air Pros + Summit Roofing Co. Built with Astro + TinaCMS"
+  "header": {
+    "wordmark": "Trade Demos",
+    "wordmarkSub": "MESA · FRISCO",
+    "badge": "Demo",
+    "menuLabel": "Menu",
+    "nav": [
+      { "title": "Home", "link": "/" },
+      { "title": "HVAC", "link": "/hvac" },
+      { "title": "Roofing", "link": "/roofing" }
+    ],
+    "actions": [
+      { "label": "HVAC", "link": "/hvac", "variant": "ghost" },
+      { "label": "Roofing", "link": "/roofing", "variant": "solid" }
+    ]
+  },
+  "footer": {
+    "wordmark": "Trade Demos",
+    "wordmarkSub": "MESA · FRISCO",
+    "blurb": "Demo builds — Apex (Mesa) + Summit (Frisco) are fictional. Pricing/materials from nearby real shops, photos are Pexels placeholders. No badge wall — just the shop.",
+    "columns": [
+      {
+        "heading": "Demos",
+        "links": [
+          { "title": "Apex Air Pros — HVAC", "link": "/hvac" },
+          { "title": "Summit Roofing Co. — Roofing", "link": "/roofing" }
+        ]
+      },
+      {
+        "heading": "Proof",
+        "links": [
+          { "title": "Reviews + stats", "link": "/hvac#proof" },
+          { "title": "Materials + process", "link": "/roofing#proof" }
+        ]
+      },
+      {
+        "heading": "Contact",
+        "links": [
+          { "title": "(480) 660-6150 — Mesa", "link": "tel:4806606150" },
+          { "title": "(214) 555-0283 — Frisco", "link": "tel:2145550283" }
+        ]
+      }
+    ],
+    "footerNote": "© 2026 Concept demo — fictional brands Apex Air Pros + Summit Roofing Co.",
+    "credit": "Built with Astro + TinaCMS"
+  }
 }

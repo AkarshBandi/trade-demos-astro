@@ -6,7 +6,7 @@ export const richTextBlockSchema: Template = {
   fields: [
     { type: 'string', label: 'Eyebrow', name: 'eyebrow' },
     { type: 'string', label: 'Headline', name: 'headline' },
-    { type: 'rich-text', label: 'Body', name: 'body' },
+    { type: 'string', label: 'Body', name: 'body', ui: { component: 'textarea' } },
   ],
   ui: {
     defaultItem: {

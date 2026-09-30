@@ -117,12 +117,41 @@ export const ConfigPartsFragmentDoc = gql`
     title
     description
   }
-  nav {
+  header {
     __typename
-    title
-    link
+    wordmark
+    wordmarkSub
+    badge
+    menuLabel
+    nav {
+      __typename
+      title
+      link
+    }
+    actions {
+      __typename
+      label
+      link
+      variant
+    }
   }
-  footerNote
+  footer {
+    __typename
+    wordmark
+    wordmarkSub
+    blurb
+    columns {
+      __typename
+      heading
+      links {
+        __typename
+        title
+        link
+      }
+    }
+    footerNote
+    credit
+  }
 }
     `;
 export const PageDocument = gql`

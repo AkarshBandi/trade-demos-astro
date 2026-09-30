@@ -120,7 +120,7 @@ type PageBlocksHero {
 type PageBlocksRichText {
   eyebrow: String
   headline: String
-  body: RichText
+  body: String
 }
 
 type PageBlocksMediaImage {
@@ -254,16 +254,10 @@ input PageBlocksHeroFilter {
   image: PageBlocksHeroImageFilter
 }
 
-input RichTextFilter {
-  startsWith: String
-  eq: String
-  exists: Boolean
-}
-
 input PageBlocksRichTextFilter {
   eyebrow: StringFilter
   headline: StringFilter
-  body: RichTextFilter
+  body: StringFilter
 }
 
 input PageBlocksMediaImageFilter {
@@ -295,6 +289,12 @@ input PageBlocksGalleryImagesFilter {
 input PageBlocksGalleryFilter {
   headline: StringFilter
   images: PageBlocksGalleryImagesFilter
+}
+
+input RichTextFilter {
+  startsWith: String
+  eq: String
+  exists: Boolean
 }
 
 input PageBlocksAccordionItemsFilter {
@@ -387,15 +387,49 @@ type ConfigSeo {
   description: String!
 }
 
-type ConfigNav {
+type ConfigHeaderNav {
   title: String!
   link: String!
 }
 
+type ConfigHeaderActions {
+  label: String
+  link: String
+  variant: String
+}
+
+type ConfigHeader {
+  wordmark: String
+  wordmarkSub: String
+  badge: String
+  menuLabel: String
+  nav: [ConfigHeaderNav]
+  actions: [ConfigHeaderActions]
+}
+
+type ConfigFooterColumnsLinks {
+  title: String!
+  link: String!
+}
+
+type ConfigFooterColumns {
+  heading: String
+  links: [ConfigFooterColumnsLinks]
+}
+
+type ConfigFooter {
+  wordmark: String
+  wordmarkSub: String
+  blurb: String
+  columns: [ConfigFooterColumns]
+  footerNote: String
+  credit: String
+}
+
 type Config implements Node & Document {
   seo: ConfigSeo
-  nav: [ConfigNav]
-  footerNote: String
+  header: ConfigHeader
+  footer: ConfigFooter
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
@@ -406,15 +440,49 @@ input ConfigSeoFilter {
   description: StringFilter
 }
 
-input ConfigNavFilter {
+input ConfigHeaderNavFilter {
   title: StringFilter
   link: StringFilter
 }
 
+input ConfigHeaderActionsFilter {
+  label: StringFilter
+  link: StringFilter
+  variant: StringFilter
+}
+
+input ConfigHeaderFilter {
+  wordmark: StringFilter
+  wordmarkSub: StringFilter
+  badge: StringFilter
+  menuLabel: StringFilter
+  nav: ConfigHeaderNavFilter
+  actions: ConfigHeaderActionsFilter
+}
+
+input ConfigFooterColumnsLinksFilter {
+  title: StringFilter
+  link: StringFilter
+}
+
+input ConfigFooterColumnsFilter {
+  heading: StringFilter
+  links: ConfigFooterColumnsLinksFilter
+}
+
+input ConfigFooterFilter {
+  wordmark: StringFilter
+  wordmarkSub: StringFilter
+  blurb: StringFilter
+  columns: ConfigFooterColumnsFilter
+  footerNote: StringFilter
+  credit: StringFilter
+}
+
 input ConfigFilter {
   seo: ConfigSeoFilter
-  nav: ConfigNavFilter
-  footerNote: StringFilter
+  header: ConfigHeaderFilter
+  footer: ConfigFooterFilter
 }
 
 type ConfigConnectionEdges {
@@ -478,7 +546,7 @@ input PageBlocksHeroMutation {
 input PageBlocksRichTextMutation {
   eyebrow: String
   headline: String
-  body: RichText
+  body: String
 }
 
 input PageBlocksMediaImageMutation {
@@ -586,15 +654,49 @@ input ConfigSeoMutation {
   description: String
 }
 
-input ConfigNavMutation {
+input ConfigHeaderNavMutation {
   title: String
   link: String
 }
 
+input ConfigHeaderActionsMutation {
+  label: String
+  link: String
+  variant: String
+}
+
+input ConfigHeaderMutation {
+  wordmark: String
+  wordmarkSub: String
+  badge: String
+  menuLabel: String
+  nav: [ConfigHeaderNavMutation]
+  actions: [ConfigHeaderActionsMutation]
+}
+
+input ConfigFooterColumnsLinksMutation {
+  title: String
+  link: String
+}
+
+input ConfigFooterColumnsMutation {
+  heading: String
+  links: [ConfigFooterColumnsLinksMutation]
+}
+
+input ConfigFooterMutation {
+  wordmark: String
+  wordmarkSub: String
+  blurb: String
+  columns: [ConfigFooterColumnsMutation]
+  footerNote: String
+  credit: String
+}
+
 input ConfigMutation {
   seo: ConfigSeoMutation
-  nav: [ConfigNavMutation]
-  footerNote: String
+  header: ConfigHeaderMutation
+  footer: ConfigFooterMutation
 }
 
 schema {

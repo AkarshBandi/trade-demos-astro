@@ -217,7 +217,7 @@ export type PageBlocksRichText = {
   __typename?: 'PageBlocksRichText';
   eyebrow?: Maybe<Scalars['String']['output']>;
   headline?: Maybe<Scalars['String']['output']>;
-  body?: Maybe<Scalars['RichText']['output']>;
+  body?: Maybe<Scalars['String']['output']>;
 };
 
 export type PageBlocksMediaImage = {
@@ -365,16 +365,10 @@ export type PageBlocksHeroFilter = {
   image?: InputMaybe<PageBlocksHeroImageFilter>;
 };
 
-export type RichTextFilter = {
-  startsWith?: InputMaybe<Scalars['String']['input']>;
-  eq?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
 export type PageBlocksRichTextFilter = {
   eyebrow?: InputMaybe<StringFilter>;
   headline?: InputMaybe<StringFilter>;
-  body?: InputMaybe<RichTextFilter>;
+  body?: InputMaybe<StringFilter>;
 };
 
 export type PageBlocksMediaImageFilter = {
@@ -406,6 +400,12 @@ export type PageBlocksGalleryImagesFilter = {
 export type PageBlocksGalleryFilter = {
   headline?: InputMaybe<StringFilter>;
   images?: InputMaybe<PageBlocksGalleryImagesFilter>;
+};
+
+export type RichTextFilter = {
+  startsWith?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type PageBlocksAccordionItemsFilter = {
@@ -501,17 +501,56 @@ export type ConfigSeo = {
   description: Scalars['String']['output'];
 };
 
-export type ConfigNav = {
-  __typename?: 'ConfigNav';
+export type ConfigHeaderNav = {
+  __typename?: 'ConfigHeaderNav';
   title: Scalars['String']['output'];
   link: Scalars['String']['output'];
+};
+
+export type ConfigHeaderActions = {
+  __typename?: 'ConfigHeaderActions';
+  label?: Maybe<Scalars['String']['output']>;
+  link?: Maybe<Scalars['String']['output']>;
+  variant?: Maybe<Scalars['String']['output']>;
+};
+
+export type ConfigHeader = {
+  __typename?: 'ConfigHeader';
+  wordmark?: Maybe<Scalars['String']['output']>;
+  wordmarkSub?: Maybe<Scalars['String']['output']>;
+  badge?: Maybe<Scalars['String']['output']>;
+  menuLabel?: Maybe<Scalars['String']['output']>;
+  nav?: Maybe<Array<Maybe<ConfigHeaderNav>>>;
+  actions?: Maybe<Array<Maybe<ConfigHeaderActions>>>;
+};
+
+export type ConfigFooterColumnsLinks = {
+  __typename?: 'ConfigFooterColumnsLinks';
+  title: Scalars['String']['output'];
+  link: Scalars['String']['output'];
+};
+
+export type ConfigFooterColumns = {
+  __typename?: 'ConfigFooterColumns';
+  heading?: Maybe<Scalars['String']['output']>;
+  links?: Maybe<Array<Maybe<ConfigFooterColumnsLinks>>>;
+};
+
+export type ConfigFooter = {
+  __typename?: 'ConfigFooter';
+  wordmark?: Maybe<Scalars['String']['output']>;
+  wordmarkSub?: Maybe<Scalars['String']['output']>;
+  blurb?: Maybe<Scalars['String']['output']>;
+  columns?: Maybe<Array<Maybe<ConfigFooterColumns>>>;
+  footerNote?: Maybe<Scalars['String']['output']>;
+  credit?: Maybe<Scalars['String']['output']>;
 };
 
 export type Config = Node & Document & {
   __typename?: 'Config';
   seo?: Maybe<ConfigSeo>;
-  nav?: Maybe<Array<Maybe<ConfigNav>>>;
-  footerNote?: Maybe<Scalars['String']['output']>;
+  header?: Maybe<ConfigHeader>;
+  footer?: Maybe<ConfigFooter>;
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
   _values: Scalars['JSON']['output'];
@@ -522,15 +561,49 @@ export type ConfigSeoFilter = {
   description?: InputMaybe<StringFilter>;
 };
 
-export type ConfigNavFilter = {
+export type ConfigHeaderNavFilter = {
   title?: InputMaybe<StringFilter>;
   link?: InputMaybe<StringFilter>;
 };
 
+export type ConfigHeaderActionsFilter = {
+  label?: InputMaybe<StringFilter>;
+  link?: InputMaybe<StringFilter>;
+  variant?: InputMaybe<StringFilter>;
+};
+
+export type ConfigHeaderFilter = {
+  wordmark?: InputMaybe<StringFilter>;
+  wordmarkSub?: InputMaybe<StringFilter>;
+  badge?: InputMaybe<StringFilter>;
+  menuLabel?: InputMaybe<StringFilter>;
+  nav?: InputMaybe<ConfigHeaderNavFilter>;
+  actions?: InputMaybe<ConfigHeaderActionsFilter>;
+};
+
+export type ConfigFooterColumnsLinksFilter = {
+  title?: InputMaybe<StringFilter>;
+  link?: InputMaybe<StringFilter>;
+};
+
+export type ConfigFooterColumnsFilter = {
+  heading?: InputMaybe<StringFilter>;
+  links?: InputMaybe<ConfigFooterColumnsLinksFilter>;
+};
+
+export type ConfigFooterFilter = {
+  wordmark?: InputMaybe<StringFilter>;
+  wordmarkSub?: InputMaybe<StringFilter>;
+  blurb?: InputMaybe<StringFilter>;
+  columns?: InputMaybe<ConfigFooterColumnsFilter>;
+  footerNote?: InputMaybe<StringFilter>;
+  credit?: InputMaybe<StringFilter>;
+};
+
 export type ConfigFilter = {
   seo?: InputMaybe<ConfigSeoFilter>;
-  nav?: InputMaybe<ConfigNavFilter>;
-  footerNote?: InputMaybe<StringFilter>;
+  header?: InputMaybe<ConfigHeaderFilter>;
+  footer?: InputMaybe<ConfigFooterFilter>;
 };
 
 export type ConfigConnectionEdges = {
@@ -654,7 +727,7 @@ export type PageBlocksHeroMutation = {
 export type PageBlocksRichTextMutation = {
   eyebrow?: InputMaybe<Scalars['String']['input']>;
   headline?: InputMaybe<Scalars['String']['input']>;
-  body?: InputMaybe<Scalars['RichText']['input']>;
+  body?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type PageBlocksMediaImageMutation = {
@@ -762,15 +835,49 @@ export type ConfigSeoMutation = {
   description?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type ConfigNavMutation = {
+export type ConfigHeaderNavMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
   link?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type ConfigHeaderActionsMutation = {
+  label?: InputMaybe<Scalars['String']['input']>;
+  link?: InputMaybe<Scalars['String']['input']>;
+  variant?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ConfigHeaderMutation = {
+  wordmark?: InputMaybe<Scalars['String']['input']>;
+  wordmarkSub?: InputMaybe<Scalars['String']['input']>;
+  badge?: InputMaybe<Scalars['String']['input']>;
+  menuLabel?: InputMaybe<Scalars['String']['input']>;
+  nav?: InputMaybe<Array<InputMaybe<ConfigHeaderNavMutation>>>;
+  actions?: InputMaybe<Array<InputMaybe<ConfigHeaderActionsMutation>>>;
+};
+
+export type ConfigFooterColumnsLinksMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  link?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ConfigFooterColumnsMutation = {
+  heading?: InputMaybe<Scalars['String']['input']>;
+  links?: InputMaybe<Array<InputMaybe<ConfigFooterColumnsLinksMutation>>>;
+};
+
+export type ConfigFooterMutation = {
+  wordmark?: InputMaybe<Scalars['String']['input']>;
+  wordmarkSub?: InputMaybe<Scalars['String']['input']>;
+  blurb?: InputMaybe<Scalars['String']['input']>;
+  columns?: InputMaybe<Array<InputMaybe<ConfigFooterColumnsMutation>>>;
+  footerNote?: InputMaybe<Scalars['String']['input']>;
+  credit?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type ConfigMutation = {
   seo?: InputMaybe<ConfigSeoMutation>;
-  nav?: InputMaybe<Array<InputMaybe<ConfigNavMutation>>>;
-  footerNote?: InputMaybe<Scalars['String']['input']>;
+  header?: InputMaybe<ConfigHeaderMutation>;
+  footer?: InputMaybe<ConfigFooterMutation>;
 };
 
 export type StringFilter = {
@@ -811,16 +918,10 @@ export type PageBlocksHeroFilter = {
   image?: PageBlocksHeroImageFilter | null | undefined;
 };
 
-export type RichTextFilter = {
-  startsWith?: string | null | undefined;
-  eq?: string | null | undefined;
-  exists?: boolean | null | undefined;
-};
-
 export type PageBlocksRichTextFilter = {
   eyebrow?: StringFilter | null | undefined;
   headline?: StringFilter | null | undefined;
-  body?: RichTextFilter | null | undefined;
+  body?: StringFilter | null | undefined;
 };
 
 export type PageBlocksMediaImageFilter = {
@@ -852,6 +953,12 @@ export type PageBlocksGalleryImagesFilter = {
 export type PageBlocksGalleryFilter = {
   headline?: StringFilter | null | undefined;
   images?: PageBlocksGalleryImagesFilter | null | undefined;
+};
+
+export type RichTextFilter = {
+  startsWith?: string | null | undefined;
+  eq?: string | null | undefined;
+  exists?: boolean | null | undefined;
 };
 
 export type PageBlocksAccordionItemsFilter = {
@@ -933,20 +1040,54 @@ export type ConfigSeoFilter = {
   description?: StringFilter | null | undefined;
 };
 
-export type ConfigNavFilter = {
+export type ConfigHeaderNavFilter = {
   title?: StringFilter | null | undefined;
   link?: StringFilter | null | undefined;
 };
 
+export type ConfigHeaderActionsFilter = {
+  label?: StringFilter | null | undefined;
+  link?: StringFilter | null | undefined;
+  variant?: StringFilter | null | undefined;
+};
+
+export type ConfigHeaderFilter = {
+  wordmark?: StringFilter | null | undefined;
+  wordmarkSub?: StringFilter | null | undefined;
+  badge?: StringFilter | null | undefined;
+  menuLabel?: StringFilter | null | undefined;
+  nav?: ConfigHeaderNavFilter | null | undefined;
+  actions?: ConfigHeaderActionsFilter | null | undefined;
+};
+
+export type ConfigFooterColumnsLinksFilter = {
+  title?: StringFilter | null | undefined;
+  link?: StringFilter | null | undefined;
+};
+
+export type ConfigFooterColumnsFilter = {
+  heading?: StringFilter | null | undefined;
+  links?: ConfigFooterColumnsLinksFilter | null | undefined;
+};
+
+export type ConfigFooterFilter = {
+  wordmark?: StringFilter | null | undefined;
+  wordmarkSub?: StringFilter | null | undefined;
+  blurb?: StringFilter | null | undefined;
+  columns?: ConfigFooterColumnsFilter | null | undefined;
+  footerNote?: StringFilter | null | undefined;
+  credit?: StringFilter | null | undefined;
+};
+
 export type ConfigFilter = {
   seo?: ConfigSeoFilter | null | undefined;
-  nav?: ConfigNavFilter | null | undefined;
-  footerNote?: StringFilter | null | undefined;
+  header?: ConfigHeaderFilter | null | undefined;
+  footer?: ConfigFooterFilter | null | undefined;
 };
 
 export type PagePartsFragment = { __typename: 'Page', seoTitle: string, blocks: Array<
     | { __typename: 'PageBlocksHero', eyebrow: string | null, headline: string | null, tagline: string | null, primaryAction: { __typename: 'PageBlocksHeroPrimaryAction', label: string | null, link: string | null } | null, secondaryAction: { __typename: 'PageBlocksHeroSecondaryAction', label: string | null, link: string | null } | null, image: { __typename: 'PageBlocksHeroImage', src: string | null, alt: string | null } | null }
-    | { __typename: 'PageBlocksRichText', eyebrow: string | null, headline: string | null, body: TinaMarkdownContent | null }
+    | { __typename: 'PageBlocksRichText', eyebrow: string | null, headline: string | null, body: string | null }
     | { __typename: 'PageBlocksMedia', aspect: string | null, image: { __typename: 'PageBlocksMediaImage', src: string | null, alt: string | null, caption: string | null } | null }
     | { __typename: 'PageBlocksCta', headline: string | null, text: string | null, primaryLabel: string | null, primaryLink: string | null, secondaryLabel: string | null, secondaryLink: string | null }
     | { __typename: 'PageBlocksGallery', headline: string | null, images: Array<{ __typename: 'PageBlocksGalleryImages', src: string | null, alt: string | null, caption: string | null } | null> | null }
@@ -956,7 +1097,7 @@ export type PagePartsFragment = { __typename: 'Page', seoTitle: string, blocks: 
     | { __typename: 'PageBlocksPricing', eyebrow: string | null, headline: string | null, subhead: string | null, accent: string | null, fine: string | null, tiers: Array<{ __typename: 'PageBlocksPricingTiers', title: string | null, price: string | null, priceNote: string | null, desc: string | null, bullets: Array<string | null> | null, featured: boolean | null, ctaLabel: string | null, ctaLink: string | null } | null> | null }
    | null> | null };
 
-export type ConfigPartsFragment = { __typename: 'Config', footerNote: string | null, seo: { __typename: 'ConfigSeo', title: string, description: string } | null, nav: Array<{ __typename: 'ConfigNav', title: string, link: string } | null> | null };
+export type ConfigPartsFragment = { __typename: 'Config', seo: { __typename: 'ConfigSeo', title: string, description: string } | null, header: { __typename: 'ConfigHeader', wordmark: string | null, wordmarkSub: string | null, badge: string | null, menuLabel: string | null, nav: Array<{ __typename: 'ConfigHeaderNav', title: string, link: string } | null> | null, actions: Array<{ __typename: 'ConfigHeaderActions', label: string | null, link: string | null, variant: string | null } | null> | null } | null, footer: { __typename: 'ConfigFooter', wordmark: string | null, wordmarkSub: string | null, blurb: string | null, footerNote: string | null, credit: string | null, columns: Array<{ __typename: 'ConfigFooterColumns', heading: string | null, links: Array<{ __typename: 'ConfigFooterColumnsLinks', title: string, link: string } | null> | null } | null> | null } | null };
 
 export type PageQueryVariables = Exact<{
   relativePath: string;
@@ -965,7 +1106,7 @@ export type PageQueryVariables = Exact<{
 
 export type PageQuery = { page: { __typename: 'Page', id: string, seoTitle: string, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, blocks: Array<
       | { __typename: 'PageBlocksHero', eyebrow: string | null, headline: string | null, tagline: string | null, primaryAction: { __typename: 'PageBlocksHeroPrimaryAction', label: string | null, link: string | null } | null, secondaryAction: { __typename: 'PageBlocksHeroSecondaryAction', label: string | null, link: string | null } | null, image: { __typename: 'PageBlocksHeroImage', src: string | null, alt: string | null } | null }
-      | { __typename: 'PageBlocksRichText', eyebrow: string | null, headline: string | null, body: TinaMarkdownContent | null }
+      | { __typename: 'PageBlocksRichText', eyebrow: string | null, headline: string | null, body: string | null }
       | { __typename: 'PageBlocksMedia', aspect: string | null, image: { __typename: 'PageBlocksMediaImage', src: string | null, alt: string | null, caption: string | null } | null }
       | { __typename: 'PageBlocksCta', headline: string | null, text: string | null, primaryLabel: string | null, primaryLink: string | null, secondaryLabel: string | null, secondaryLink: string | null }
       | { __typename: 'PageBlocksGallery', headline: string | null, images: Array<{ __typename: 'PageBlocksGalleryImages', src: string | null, alt: string | null, caption: string | null } | null> | null }
@@ -987,7 +1128,7 @@ export type PageConnectionQueryVariables = Exact<{
 
 export type PageConnectionQuery = { pageConnection: { totalCount: number, pageInfo: { hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ cursor: string, node: { __typename: 'Page', id: string, seoTitle: string, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, blocks: Array<
           | { __typename: 'PageBlocksHero', eyebrow: string | null, headline: string | null, tagline: string | null, primaryAction: { __typename: 'PageBlocksHeroPrimaryAction', label: string | null, link: string | null } | null, secondaryAction: { __typename: 'PageBlocksHeroSecondaryAction', label: string | null, link: string | null } | null, image: { __typename: 'PageBlocksHeroImage', src: string | null, alt: string | null } | null }
-          | { __typename: 'PageBlocksRichText', eyebrow: string | null, headline: string | null, body: TinaMarkdownContent | null }
+          | { __typename: 'PageBlocksRichText', eyebrow: string | null, headline: string | null, body: string | null }
           | { __typename: 'PageBlocksMedia', aspect: string | null, image: { __typename: 'PageBlocksMediaImage', src: string | null, alt: string | null, caption: string | null } | null }
           | { __typename: 'PageBlocksCta', headline: string | null, text: string | null, primaryLabel: string | null, primaryLink: string | null, secondaryLabel: string | null, secondaryLink: string | null }
           | { __typename: 'PageBlocksGallery', headline: string | null, images: Array<{ __typename: 'PageBlocksGalleryImages', src: string | null, alt: string | null, caption: string | null } | null> | null }
@@ -1002,7 +1143,7 @@ export type ConfigQueryVariables = Exact<{
 }>;
 
 
-export type ConfigQuery = { config: { __typename: 'Config', id: string, footerNote: string | null, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, seo: { __typename: 'ConfigSeo', title: string, description: string } | null, nav: Array<{ __typename: 'ConfigNav', title: string, link: string } | null> | null } };
+export type ConfigQuery = { config: { __typename: 'Config', id: string, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, seo: { __typename: 'ConfigSeo', title: string, description: string } | null, header: { __typename: 'ConfigHeader', wordmark: string | null, wordmarkSub: string | null, badge: string | null, menuLabel: string | null, nav: Array<{ __typename: 'ConfigHeaderNav', title: string, link: string } | null> | null, actions: Array<{ __typename: 'ConfigHeaderActions', label: string | null, link: string | null, variant: string | null } | null> | null } | null, footer: { __typename: 'ConfigFooter', wordmark: string | null, wordmarkSub: string | null, blurb: string | null, footerNote: string | null, credit: string | null, columns: Array<{ __typename: 'ConfigFooterColumns', heading: string | null, links: Array<{ __typename: 'ConfigFooterColumnsLinks', title: string, link: string } | null> | null } | null> | null } | null } };
 
 export type ConfigConnectionQueryVariables = Exact<{
   before?: string | null | undefined;
@@ -1014,7 +1155,7 @@ export type ConfigConnectionQueryVariables = Exact<{
 }>;
 
 
-export type ConfigConnectionQuery = { configConnection: { totalCount: number, pageInfo: { hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ cursor: string, node: { __typename: 'Config', id: string, footerNote: string | null, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, seo: { __typename: 'ConfigSeo', title: string, description: string } | null, nav: Array<{ __typename: 'ConfigNav', title: string, link: string } | null> | null } | null } | null> | null } };
+export type ConfigConnectionQuery = { configConnection: { totalCount: number, pageInfo: { hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ cursor: string, node: { __typename: 'Config', id: string, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, seo: { __typename: 'ConfigSeo', title: string, description: string } | null, header: { __typename: 'ConfigHeader', wordmark: string | null, wordmarkSub: string | null, badge: string | null, menuLabel: string | null, nav: Array<{ __typename: 'ConfigHeaderNav', title: string, link: string } | null> | null, actions: Array<{ __typename: 'ConfigHeaderActions', label: string | null, link: string | null, variant: string | null } | null> | null } | null, footer: { __typename: 'ConfigFooter', wordmark: string | null, wordmarkSub: string | null, blurb: string | null, footerNote: string | null, credit: string | null, columns: Array<{ __typename: 'ConfigFooterColumns', heading: string | null, links: Array<{ __typename: 'ConfigFooterColumnsLinks', title: string, link: string } | null> | null } | null> | null } | null } | null } | null> | null } };
 
 export const PagePartsFragmentDoc = gql`
     fragment PageParts on Page {
@@ -1128,12 +1269,41 @@ export const ConfigPartsFragmentDoc = gql`
     title
     description
   }
-  nav {
+  header {
     __typename
-    title
-    link
+    wordmark
+    wordmarkSub
+    badge
+    menuLabel
+    nav {
+      __typename
+      title
+      link
+    }
+    actions {
+      __typename
+      label
+      link
+      variant
+    }
   }
-  footerNote
+  footer {
+    __typename
+    wordmark
+    wordmarkSub
+    blurb
+    columns {
+      __typename
+      heading
+      links {
+        __typename
+        title
+        link
+      }
+    }
+    footerNote
+    credit
+  }
 }
     `;
 export const PageDocument = gql`
