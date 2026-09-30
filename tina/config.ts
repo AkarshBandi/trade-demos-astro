@@ -2,18 +2,16 @@ import { defineConfig } from 'tinacms';
 import { PageCollection } from './collections/page';
 import { GlobalCollection } from './collections/global';
 
-// 'master', NOT 'main'. The CI vars above are set by whichever host runs the
-// build, and this fallback is what a LOCAL `tinacms build` uses. It was
-// 'main', which is not a branch that exists in this repository — so a local
-// build would sync against a non-existent branch and the CMS would show stale
-// or empty content, which reads as "my credentials are wrong" and is not.
+// Standardise on 'main' (PRECAUTIONS.md 2). Both other Tina projects index
+// 'main' and their editors resolve; this one was on 'master' and returned an
+// empty content store, so the admin rendered the collection with no documents.
 const branch =
   process.env.GITHUB_BRANCH ||
   process.env.VERCEL_GIT_COMMIT_REF ||
   process.env.WORKERS_CI_BRANCH ||
   process.env.CF_PAGES_BRANCH ||
   process.env.HEAD ||
-  'master';
+  'main';
 
 export default defineConfig({
   branch,
