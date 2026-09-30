@@ -9,7 +9,7 @@ const items = (data?.items ?? []).filter(Boolean);
     {items.map((item: any) => (
       <div>
         <div style="font-size:2.2rem;font-weight:800;line-height:1" data-tina-field={tinaField(item, 'value')}>{item?.value}</div>
-        <div style="margin-top:6px;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;opacity:0.6" data-tina-field={tinaField(item, 'label')}>{item?.label}</div>
+        <div style="margin-top:6px;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-muted)" data-tina-field={tinaField(item, 'label')}>{item?.label}</div>
       </div>
     ))}
   </div>

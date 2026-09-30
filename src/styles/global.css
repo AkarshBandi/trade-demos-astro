@@ -8,7 +8,12 @@
   --paper-3:#EDE8E0;
   --ink:#0F2439;
   --ink-2:#2A3A4D;
-  --ink-3:#6A7685;
+  --ink-3:#626E7D;
+  /* Muted text. The blocks used to reach for opacity to grey text out, but
+     opacity on text cannot clear 4.5:1 without flattening the hierarchy: at
+     0.6 a #626E7D sits at 2.5:1. This is the lightest grey that still
+     passes, so the tiers stay visually distinct and stay legible. */
+  --ink-muted:#68747F;
   --line:#E2DDD4;
   --line-2:#CFC8BA;
   --brick:#C1272D;

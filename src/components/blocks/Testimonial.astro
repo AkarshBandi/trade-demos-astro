@@ -8,7 +8,7 @@ const { data } = Astro.props as { data: any };
     {data?.avatar?.src && <img src={data.avatar.src} alt={data.avatar.alt ?? ''} style="width:40px;height:40px;border-radius:999px;object-fit:cover" data-tina-field={tinaField(data, 'avatar')} />}
     <div style="text-align:left">
       {data?.author && <div style="font-weight:600" data-tina-field={tinaField(data, 'author')}>{data.author}</div>}
-      {data?.role && <div style="font-size:12px;opacity:0.6" data-tina-field={tinaField(data, 'role')}>{data.role}</div>}
+      {data?.role && <div style="font-size:12px;color:var(--ink-muted)" data-tina-field={tinaField(data, 'role')}>{data.role}</div>}
     </div>
   </figcaption>
 </figure>
