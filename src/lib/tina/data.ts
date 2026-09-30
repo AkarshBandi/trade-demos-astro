@@ -56,9 +56,6 @@ export const getPage = async (slug: string) => {
   return requestWithMetadata(Promise.resolve({ data: { page: fm }, query: '', variables: { relativePath: `${slug}.mdx` } } as any), { priority: 'primary' });
 };
 
-export const getBlog = (slug: string) =>
-  requestWithMetadata(client.queries.blog({ relativePath: `${slug}.mdx` }), { priority: 'primary' });
-
 export async function listPages() {
   try {
     const r = await client.queries.pageConnection();
@@ -75,23 +72,7 @@ export async function listPages() {
   });
 }
 
-export async function listBlogs() {
-  try {
-    const r = await client.queries.blogConnection();
-    return (r.data.blogConnection.edges ?? [])
-      .flatMap((e: any) => (e?.node ? [e.node] : []))
-      .sort((a: any, b: any) => {
-        const ad = a?.pubDate ? new Date(a.pubDate).valueOf() : 0;
-        const bd = b?.pubDate ? new Date(b.pubDate).valueOf() : 0;
-        return bd - ad;
-      });
-  } catch {
-    return [];
-  }
-}
-
 export type CmsConfig = Awaited<ReturnType<typeof getConfig>>['data']['config'];
 export type CmsPage = Awaited<ReturnType<typeof getPage>>['data']['page'];
-export type CmsBlog = Awaited<ReturnType<typeof getBlog>>['data']['blog'];
 
 export type PageBlock = NonNullable<NonNullable<CmsPage['blocks']>[number]>;
