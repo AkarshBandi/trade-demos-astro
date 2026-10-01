@@ -2,7 +2,7 @@
   "name": "trade-demos-astro",
   "type": "module",
   "version": "1.0.0",
-  "description": "Trade demos — HVAC Apex Air Pros (Mesa AZ) + Roofing Summit Co (Frisco TX) — Cloudflare Workers, TinaCMS local",
+  "description": "Trade demos \u2014 HVAC Apex Air Pros (Mesa AZ) + Roofing Summit Co (Frisco TX) \u2014 Cloudflare Workers, TinaCMS local",
   "scripts": {
     "dev": "tinacms dev -c \"astro dev\"",
     "build": "tinacms build && astro build",
